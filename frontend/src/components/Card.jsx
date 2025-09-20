@@ -1,31 +1,46 @@
 import { useContext } from "react"
 import { StateContext } from "../App"
+import { useRef } from "react"
 
 // This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
 const Card = ({
   item
 }) => {
   const {dispatch} = useContext(StateContext)
+  const currentScoreRef = useRef(item.score)
 
-  const handleReplyDispatch = () => {
+  const handleReplyDispatch = () =>
     // accesses the object directly so you could find the parent comment through the 'parentId' property
     dispatch({
       type: 'CREATE_REPLY',
-      id: item.id
+      payload: {
+        id: item.id,
+        username: item.user.username
+      }
     })
-  }
 
   const handleEditDispatch = () => {
     // defines the edit method here so you can modify the object directly
     console.log('This triggers the edit functionality')
   }
 
-  const handleIncrementScoreDispatch = () => {
+  const handleIncrementScoreDispatch = () =>
     dispatch({
       type: 'INCREMENT_SCORE',
-      id: item.id
+      payload: {
+        id: item.id,
+        currentScore: currentScoreRef.current
+      }
     })
-  }
+
+  const handleDecrementScoreDispatch = () =>
+    dispatch({
+      type: 'DECREMENT_SCORE',
+      payload: {
+        id: item.id,
+        currentScore: currentScoreRef.current
+      }
+    })
 
   return (
     <div className="card">
@@ -38,7 +53,7 @@ const Card = ({
 
         <span>{item.score}</span>
 
-        <button>
+        <button onClick={handleDecrementScoreDispatch}>
           <div className="icon-img">
             <img src="/images/icon-minus.svg" alt="" />
           </div>

@@ -1,20 +1,47 @@
+import data from './data.json'
+
 export function reducer(state, action) {
-    const comment = state.byId[action.id]
+    const clonedState = structuredClone(state)
+    const comment = clonedState.byId[action.payload.id]
 
     switch (action.type) {
         case 'CREATE_REPLY':
-            console.log(comment)
-            return state
+            const newId = Math.max.apply(null, state.allId) + 1
 
-        case 'INCREMENT_SCORE':
-            const clone = structuredClone(state)
-            
-            clone.byId[action.id] = {
-                ...comment,
-                score: comment.score + 1
+            clonedState.byId[newId] = {
+                content: 'A new reply!',
+                score: 0,
+                replies: null,
+                id: newId,
+                parentId: comment.parentId || action.payload.id,
+                replyingTo: action.payload.username,
+                createdAt: 'just now',
+                user: data.currentUser
             }
 
-            return clone
+            // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
+            clonedState.byId[comment.parentId || action.payload.id].replies.push(newId)
+            clonedState.allId.push(newId)
+
+            return clonedState
+
+        case 'INCREMENT_SCORE': {
+            clonedState.byId[action.payload.id] = {
+                ...comment,
+                score: comment.score == action.payload.currentScore ? comment.score + 1 : action.payload.currentScore
+            }
+
+            return clonedState
+        }
+
+        case 'DECREMENT_SCORE': {
+            clonedState.byId[action.payload.id] = {
+                ...comment,
+                score: comment.score === action.payload.currentScore ? comment.score - 1 : action.payload.currentScore
+            }
+
+            return clonedState
+        }
 
         default:
             return state
