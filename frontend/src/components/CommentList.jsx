@@ -1,5 +1,5 @@
 import { useReducer, useContext } from "react"
-import comments from '../data/comments.json'
+import data from '../data/comments.json'
 import { StateContext } from "../App"
 import { reducer } from "../reducer"
 import Card from "./Card"
@@ -7,7 +7,7 @@ import Card from "./Card"
 const Comment = ({
   comment
 }) => {
-  const {state} = useContext(StateContext)
+  const {comments} = useContext(StateContext)
 
   return (
     <div className="comment">
@@ -16,7 +16,7 @@ const Comment = ({
       <div className="replies-list">
         {comment.replies.map(id => (
           <Card
-            item={state.byId[id]}
+            item={comments.byId[id]}
             key={id}
           />
         ))}
@@ -26,15 +26,15 @@ const Comment = ({
 }
 
 function CommentList() {
-  const [state, dispatch] = useReducer(reducer, comments)
-  const commentIds = state.allId.filter(id => !state.byId[id].parentId)
+  const [comments, dispatch] = useReducer(reducer, data)
+  const commentIds = comments.allId.filter(id => !comments.byId[id].parentId)
 
   return (
     <div className="comments-list">
-      <StateContext.Provider value={{state, dispatch}}>
+      <StateContext.Provider value={{comments, dispatch}}>
         {commentIds.map(id => (
           <Comment
-            comment={state.byId[id]}
+            comment={comments.byId[id]}
             key={id}
           />
         ))}
