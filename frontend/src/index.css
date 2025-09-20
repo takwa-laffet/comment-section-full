@@ -27,6 +27,38 @@
     padding: 0;
 }
 
+/* Sign In */
+
+.sign-in {
+    background-color: var(--neutral-white);
+    padding: 1.5em;
+    border-radius: 5px;
+}
+
+.sign-in input {
+    display: block;
+    margin-block: .5em;
+    padding: .8em 2em;
+    border: 1px solid var(--neutral-grey-100);
+    border-radius: 5px;
+    outline: none;
+}
+
+.sign-in button {
+    background-color: var(--primary-purple-600);
+    color: var(--neutral-white);
+    margin-top: .5em;
+    padding: .5em 1em;
+    border-radius: 5px;
+    width: 100%;
+    justify-content: center;
+}
+
+.sign-in fieldset {
+    outline: none;
+    border: none;
+}
+
 /* Delete Modal */
 
 .modal-container {
