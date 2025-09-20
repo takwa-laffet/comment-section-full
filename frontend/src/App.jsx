@@ -11,14 +11,13 @@ const Comment = ({
   comment
 }) => {
   const {state} = useContext(StateContext)
-  const replyIds = state.allId.filter(id => state.byId[id].parentId === comment.id)
 
   return (
     <div className="comment">
       <Card item={comment} />
 
       <div className="replies-list">
-        {replyIds.map(id => (
+        {comment.replies.map(id => (
           <Card
             item={state.byId[id]}
             key={id}
