@@ -6,6 +6,7 @@ export function reducer(state, action) {
 
     switch (action.type) {
         case 'CREATE_REPLY':
+            const targetId = comment.parentId || action.payload.id
             const newId = Math.max.apply(null, state.allId) + 1
 
             clonedState.byId[newId] = {
@@ -13,14 +14,14 @@ export function reducer(state, action) {
                 score: 0,
                 replies: null,
                 id: newId,
-                parentId: comment.parentId || action.payload.id,
+                parentId: targetId,
                 replyingTo: action.payload.username,
                 createdAt: 'just now',
                 user: data.currentUser
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
-            clonedState.byId[comment.parentId || action.payload.id].replies.push(newId)
+            clonedState.byId[targetId].replies.push(newId)
             clonedState.allId.push(newId)
 
             return clonedState
