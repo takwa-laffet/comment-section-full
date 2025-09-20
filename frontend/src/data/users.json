@@ -1,4 +1,11 @@
 {
+    "currentUser": {
+        "image": { 
+            "png": "./images/avatars/image-juliusomo.png",
+            "webp": "./images/avatars/image-juliusomo.webp"
+        },
+        "username": "juliusomo"
+    },
     "byUsername": {
         "amyrobson": {
             "image": { 
@@ -20,14 +27,7 @@
                 "webp": "./images/avatars/image-ramsesmiron.webp"
             },
             "username": "ramsesmiron"
-        },
-        "juliusomo": {
-            "image": { 
-                "png": "./images/avatars/image-juliusomo.png",
-                "webp": "./images/avatars/image-juliusomo.webp"
-            },
-            "username": "juliusomo"
         }
     },
-    "allUsername": ["amyrobson", "maxblagun", "ramsesmiron", "juliusomo"]
+    "allUsername": ["amyrobson", "maxblagun", "ramsesmiron"]
 }

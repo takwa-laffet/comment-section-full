@@ -8,7 +8,9 @@ export const UserActions = ({
 }) => {
   const {dispatch} = useContext(StateContext)
   // mimicks user authentication for now
-  const isCurrentUser = username === 'juliusomo'
+  const isCurrentUser = users.currentUser.username === username
+
+  console.log(isCurrentUser, username)
 
   const handleReplyDispatch = () =>
     // accesses the object directly so you could find the parent comment through the 'parentId' property
@@ -52,7 +54,7 @@ export const UserActions = ({
 }
 
 function UserProfile({ username }) {
-  const user = users.byUsername[username]
+  const user = users.byUsername[username] || users.currentUser
   console.log(user)
 
   return (

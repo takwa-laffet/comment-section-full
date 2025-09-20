@@ -53,7 +53,7 @@ const Card = ({
 
           <UserActions
             commentId={item.id}
-            username={item.user.username}
+            username={item.user}
           />
         </div>
 
