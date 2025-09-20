@@ -7,7 +7,8 @@ const UserActions = ({
   username
 }) => {
   const {dispatch} = useContext(StateContext)
-  console.log(commentId)
+  // mimicks user authentication for now
+  const isCurrentUser = username === 'juliusomo'
 
   const handleReplyDispatch = () =>
     // accesses the object directly so you could find the parent comment through the 'parentId' property
@@ -19,28 +20,32 @@ const UserActions = ({
       }
     })
 
-  const handleEditDispatch = () => {
-    // defines the edit method here so you can modify the object directly
-    console.log('This triggers the edit functionality')
-  }
-
   return (
     <div className="actions">
-      {/* Passes in the id so we can find what object we are modifying */}
-      <button onClick={handleReplyDispatch}>
-        <div className="icon-img">
-          <img src="/images/icon-reply.svg" alt="" />
-        </div>
+      {!isCurrentUser && (
+        <button onClick={handleReplyDispatch}>
+          <div className="icon-img">
+            <img src="/images/icon-reply.svg" alt="" />
+          </div>
 
-        Reply
-      </button>
+          Reply
+        </button>
+      )}
 
-      <button onClick={handleEditDispatch}>
+      <button>
         <div className="icon-img">
           <img src="/images/icon-edit.svg" alt="" />
         </div>
 
         Edit
+      </button>
+
+      <button>
+        <div className="icon-img">
+          <img src="/images/icon-delete.svg" alt="" />
+        </div>
+
+        Delete
       </button>
     </div>
   )
