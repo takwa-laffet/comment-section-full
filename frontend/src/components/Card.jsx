@@ -1,71 +1,7 @@
 import { useContext } from "react"
 import { StateContext } from "../App"
 import { useRef } from "react"
-import users from '../data/users.json'
-
-const UserActions = ({
-  commentId,
-  username
-}) => {
-  const {dispatch} = useContext(StateContext)
-  // mimicks user authentication for now
-  const isCurrentUser = username === 'juliusomo'
-
-  const handleReplyDispatch = () =>
-    // accesses the object directly so you could find the parent comment through the 'parentId' property
-    dispatch({
-      type: 'CREATE_REPLY',
-      payload: {
-        id: commentId,
-        username
-      }
-    })
-
-  return (
-    <div className="actions">
-      {!isCurrentUser && (
-        <button onClick={handleReplyDispatch}>
-          <div className="icon-img">
-            <img src="/images/icon-reply.svg" alt="" />
-          </div>
-
-          Reply
-        </button>
-      )}
-
-      <button>
-        <div className="icon-img">
-          <img src="/images/icon-edit.svg" alt="" />
-        </div>
-
-        Edit
-      </button>
-
-      <button>
-        <div className="icon-img">
-          <img src="/images/icon-delete.svg" alt="" />
-        </div>
-
-        Delete
-      </button>
-    </div>
-  )
-}
-
-const UserProfile = ({ username }) => {
-  const user = users.byUsername[username]
-  console.log(user)
-
-  return (
-    <div className="user-profile">
-      <div className="user-avatar">
-        <img src={user.image.png} alt="" />
-      </div>
-
-      <h3>{user.username}</h3>
-    </div>
-  )
-}
+import UserProfile, { UserActions } from "./UserProfile"
 
 // This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
 const Card = ({
