@@ -1,6 +1,7 @@
 import { useContext } from "react"
 import { StateContext } from "../App"
 import { useRef } from "react"
+import data from '../data.json'
 
 const UserActions = ({
   commentId,
@@ -51,6 +52,21 @@ const UserActions = ({
   )
 }
 
+const UserProfile = ({ username }) => {
+  const user = data.users.byUsername[username]
+  console.log(user)
+
+  return (
+    <div className="user-profile">
+      <div className="user-avatar">
+        <img src={user.image.png} alt="" />
+      </div>
+
+      <h3>{user.username}</h3>
+    </div>
+  )
+}
+
 // This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
 const Card = ({
   item
@@ -96,14 +112,7 @@ const Card = ({
 
       <div className="content">
         <div className="profile-header">
-          <div className="user-profile">
-            <div className="user-avatar">
-              <img src={item.user.image.png} alt="" />
-            </div>
-
-            <h3>{item.user.username}</h3>
-          </div>
-
+          <UserProfile username={item.user} />
           <span className="comment-date">{item.createdAt}</span>
 
           <UserActions
