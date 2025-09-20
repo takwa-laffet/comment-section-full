@@ -32,21 +32,25 @@ export const UserActions = ({
         </button>
       )}
 
-      <button>
-        <div className="icon-img">
-          <img src="/images/icon-edit.svg" alt="" />
-        </div>
+      {isCurrentUser && (
+        <button>
+            <div className="icon-img">
+            <img src="/images/icon-edit.svg" alt="" />
+            </div>
 
-        Edit
-      </button>
+            Edit
+        </button>
+      )}
 
-      <button>
-        <div className="icon-img">
-          <img src="/images/icon-delete.svg" alt="" />
-        </div>
+      {isCurrentUser && (
+        <button>
+            <div className="icon-img">
+            <img src="/images/icon-delete.svg" alt="" />
+            </div>
 
-        Delete
-      </button>
+            Delete
+        </button>
+      )}
     </div>
   )
 }
