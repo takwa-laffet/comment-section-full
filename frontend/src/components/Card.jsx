@@ -2,20 +2,20 @@ import { useContext } from "react"
 import { StateContext } from "../App"
 import { useRef } from "react"
 
-// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
-const Card = ({
-  item
+const UserActions = ({
+  commentId,
+  username
 }) => {
   const {dispatch} = useContext(StateContext)
-  const currentScoreRef = useRef(item.score)
+  console.log(commentId)
 
   const handleReplyDispatch = () =>
     // accesses the object directly so you could find the parent comment through the 'parentId' property
     dispatch({
       type: 'CREATE_REPLY',
       payload: {
-        id: item.id,
-        username: item.user.username
+        id: commentId,
+        username
       }
     })
 
@@ -23,6 +23,35 @@ const Card = ({
     // defines the edit method here so you can modify the object directly
     console.log('This triggers the edit functionality')
   }
+
+  return (
+    <div className="actions">
+      {/* Passes in the id so we can find what object we are modifying */}
+      <button onClick={handleReplyDispatch}>
+        <div className="icon-img">
+          <img src="/images/icon-reply.svg" alt="" />
+        </div>
+
+        Reply
+      </button>
+
+      <button onClick={handleEditDispatch}>
+        <div className="icon-img">
+          <img src="/images/icon-edit.svg" alt="" />
+        </div>
+
+        Edit
+      </button>
+    </div>
+  )
+}
+
+// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
+const Card = ({
+  item
+}) => {
+  const {dispatch} = useContext(StateContext)
+  const currentScoreRef = useRef(item.score)
 
   const handleIncrementScoreDispatch = () =>
     dispatch({
@@ -72,24 +101,10 @@ const Card = ({
 
           <span className="comment-date">{item.createdAt}</span>
 
-          <div className="actions">
-            {/* Passes in the id so we can find what object we are modifying */}
-            <button onClick={handleReplyDispatch}>
-              <div className="icon-img">
-                <img src="/images/icon-reply.svg" alt="" />
-              </div>
-
-              Reply
-            </button>
-
-            <button onClick={handleEditDispatch}>
-              <div className="icon-img">
-                <img src="/images/icon-edit.svg" alt="" />
-              </div>
-
-              Edit
-            </button>
-          </div>
+          <UserActions
+            commentId={item.id}
+            username={item.user.username}
+          />
         </div>
 
         {item.replyingTo ? (
