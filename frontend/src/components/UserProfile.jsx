@@ -10,8 +10,6 @@ export const UserActions = ({
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.username === username
 
-  console.log(isCurrentUser, username)
-
   const handleReplyDispatch = () =>
     // accesses the object directly so you could find the parent comment through the 'parentId' property
     dispatch({

@@ -1,3 +1,5 @@
+import users from './data/users.json'
+
 export function reducer(state, action) {
     const clonedState = structuredClone(state)
     const comment = clonedState.byId[action.payload.id]
@@ -15,7 +17,7 @@ export function reducer(state, action) {
                 parentId: targetId,
                 replyingTo: action.payload.username,
                 createdAt: 'just now',
-                user: data.currentUser
+                user: users.currentUser.username
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
