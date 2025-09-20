@@ -1,5 +1,5 @@
 import { useReducer } from 'react'
-import data from './data.json'
+import comments from './data/comments.json'
 import { createContext } from 'react'
 import Card from './components/Card'
 import { reducer } from './reducer'
@@ -29,7 +29,7 @@ const Comment = ({
 }
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, data.comments)
+  const [state, dispatch] = useReducer(reducer, comments)
   const commentIds = state.allId.filter(id => !state.byId[id].parentId)
 
   return (

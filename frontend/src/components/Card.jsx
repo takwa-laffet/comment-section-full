@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { StateContext } from "../App"
 import { useRef } from "react"
-import data from '../data.json'
+import users from '../data/users.json'
 
 const UserActions = ({
   commentId,
@@ -53,7 +53,7 @@ const UserActions = ({
 }
 
 const UserProfile = ({ username }) => {
-  const user = data.users.byUsername[username]
+  const user = users.byUsername[username]
   console.log(user)
 
   return (

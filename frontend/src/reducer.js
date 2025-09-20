@@ -1,5 +1,3 @@
-import data from './data.json'
-
 export function reducer(state, action) {
     const clonedState = structuredClone(state)
     const comment = clonedState.byId[action.payload.id]
