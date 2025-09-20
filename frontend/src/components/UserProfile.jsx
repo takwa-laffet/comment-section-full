@@ -53,7 +53,6 @@ export const UserActions = ({
 
 function UserProfile({ username }) {
   const user = users.byUsername[username] || users.currentUser
-  console.log(user)
 
   return (
     <div className="user-profile">

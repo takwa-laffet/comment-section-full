@@ -10,8 +10,6 @@ const Card = ({
   const {dispatch} = useContext(StateContext)
   const currentScoreRef = useRef(item.score)
 
-  console.log(item)
-
   const handleIncrementScoreDispatch = () =>
     dispatch({
       type: 'INCREMENT_SCORE',
