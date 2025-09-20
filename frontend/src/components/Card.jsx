@@ -67,7 +67,7 @@ const Card = ({
               <img src={item.user.image.png} alt="" />
             </div>
 
-            <h3>{item.username}</h3>
+            <h3>{item.user.username}</h3>
           </div>
 
           <span className="comment-date">{item.createdAt}</span>
@@ -94,7 +94,7 @@ const Card = ({
 
         {item.replyingTo ? (
           <p>
-            <span>@{item.replyingTo} </span>
+            <span className="replying-to">@{item.replyingTo} </span>
             {item.content}
           </p>
         ) : (
