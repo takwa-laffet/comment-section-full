@@ -27,6 +27,9 @@ function UserActions({
   const handleReplyClick = () =>
     actions.replyCreated(commentId, username)
 
+  const handleEditClick = () =>
+    actions.commentEdited(commentId, 'edited!')
+
   return (
     <div className="actions">
       {!isCurrentUser && (
@@ -40,9 +43,9 @@ function UserActions({
       )}
 
       {isCurrentUser && (
-        <button>
+        <button onClick={handleEditClick}>
             <div className="icon-img">
-            <img src="/images/icon-edit.svg" alt="" />
+              <img src="/images/icon-edit.svg" alt="" />
             </div>
 
             Edit
@@ -52,7 +55,7 @@ function UserActions({
       {isCurrentUser && (
         <button>
             <div className="icon-img">
-            <img src="/images/icon-delete.svg" alt="" />
+              <img src="/images/icon-delete.svg" alt="" />
             </div>
 
             Delete

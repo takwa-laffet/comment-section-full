@@ -35,6 +35,14 @@ export function useComments() {
                         id,
                         username
                     }
+                }),
+            commentEdited: (id, content) =>
+                dispatch({
+                    type: 'EDIT_COMMENT',
+                    payload: {
+                        id,
+                        content
+                    }
                 })
         }
     }

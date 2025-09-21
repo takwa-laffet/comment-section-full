@@ -26,6 +26,10 @@ export function reducer(state, action) {
 
             return clonedState
 
+        case 'EDIT_COMMENT':
+            comment.content = action.payload.content
+            return clonedState
+
         case 'INCREMENT_SCORE': {
             clonedState.byId[action.payload.id] = {
                 ...comment,
