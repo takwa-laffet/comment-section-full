@@ -1,9 +1,7 @@
-import { useContext } from "react"
+import { useContext, useState, useRef } from "react"
 import { StateContext } from "../context"
-import { useRef } from "react"
 import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
-import { useState } from "react"
 
 const ScoreComponent = ({ score, commentId }) => {
   const {actions} = useContext(StateContext)

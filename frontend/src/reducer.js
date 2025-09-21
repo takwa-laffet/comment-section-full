@@ -3,12 +3,28 @@ import users from './data/users.json'
 export function reducer(state, action) {
     const clonedState = structuredClone(state)
     const comment = clonedState.byId[action.payload.id]
+    const newId = Math.max.apply(null, state.allId) + 1
 
     switch (action.type) {
+        case 'CREATE_COMMENT':
+            clonedState.byId[newId] = {
+                content: action.payload.content,
+                score: 0,
+                replies: [],
+                id: newId,
+                parentId: null,
+                replyingTo: null,
+                createdAt: 'just now',
+                user: users.currentUser.username
+            }
+
+            clonedState.allId.push(newId)
+
+            return clonedState
+            
         case 'CREATE_REPLY':
             const targetId = comment.parentId || action.payload.id
-            const newId = Math.max.apply(null, state.allId) + 1
-
+            
             clonedState.byId[newId] = {
                 content: action.payload.content,
                 score: 0,
