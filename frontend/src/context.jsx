@@ -29,8 +29,17 @@ function StateProvider({ children }) {
             }
         })
 
+    const replyCreated = (id, username) =>
+        dispatch({
+            type: 'CREATE_REPLY',
+            payload: {
+                id,
+                username
+            }
+        })
+
     return (
-        <StateContext.Provider value={{comments, dispatch, scoreIncremented, scoreDecremented}}>
+        <StateContext.Provider value={{comments, dispatch, scoreIncremented, scoreDecremented, replyCreated}}>
             {children}
         </StateContext.Provider>
     )

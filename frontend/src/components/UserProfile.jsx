@@ -6,24 +6,18 @@ export const UserActions = ({
   commentId,
   username
 }) => {
-  const {dispatch} = useContext(StateContext)
+  const {replyCreated} = useContext(StateContext)
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.username === username
 
-  const handleReplyDispatch = () =>
+  const handleReplyClick = () =>
     // accesses the object directly so you could find the parent comment through the 'parentId' property
-    dispatch({
-      type: 'CREATE_REPLY',
-      payload: {
-        id: commentId,
-        username
-      }
-    })
+    replyCreated(commentId, username)
 
   return (
     <div className="actions">
       {!isCurrentUser && (
-        <button onClick={handleReplyDispatch}>
+        <button onClick={handleReplyClick}>
           <div className="icon-img">
             <img src="/images/icon-reply.svg" alt="" />
           </div>
