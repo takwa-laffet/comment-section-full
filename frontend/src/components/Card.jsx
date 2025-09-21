@@ -83,7 +83,7 @@ const Card = ({
       {isEditing && (
         <FormComponent
           value={item.content}
-          onSubmitUpdate={() => console.log('The edit functionality')}
+          onSubmitUpdate={content => actions.commentEdited(item.id, content)}
         />
       )}
     </div>
