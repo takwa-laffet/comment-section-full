@@ -28,12 +28,13 @@ export function useComments() {
                         currentScore
                     }
                 }),
-            replyCreated: (id, username) =>
+            replyCreated: (id, username, content) =>
                 dispatch({
                     type: 'CREATE_REPLY',
                     payload: {
                         id,
-                        username
+                        username,
+                        content
                     }
                 }),
             commentEdited: (id, content) =>

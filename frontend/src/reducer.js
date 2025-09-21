@@ -10,7 +10,7 @@ export function reducer(state, action) {
             const newId = Math.max.apply(null, state.allId) + 1
 
             clonedState.byId[newId] = {
-                content: 'A new reply!',
+                content: action.payload.content,
                 score: 0,
                 replies: null,
                 id: newId,

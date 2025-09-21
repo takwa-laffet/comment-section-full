@@ -38,6 +38,7 @@ const ScoreComponent = ({ score, commentId }) => {
 const Card = ({
   item
 }) => {
+  const {actions} = useContext(StateContext)
   const [isReplying, setIsReplying] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
@@ -75,7 +76,7 @@ const Card = ({
       {isReplying && (
         <FormComponent
           placeholderValue='Add reply'
-          onSubmitUpdate={() => console.log('The reply functionality')}
+          onSubmitUpdate={content => actions.replyCreated(item.id, item.user, content)}
         />
       )}
 
