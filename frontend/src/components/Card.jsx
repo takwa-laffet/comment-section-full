@@ -10,7 +10,7 @@ const ScoreComponent = ({ score, itemId }) => {
   const handleIncrementScoreClick = () =>
     actions.scoreIncremented(itemId, currentScoreRef.current)
 
-  const handleDecrementScoreDispatch = () =>
+  const handleDecrementScoreClick = () =>
     actions.scoreDecremented(itemId, currentScoreRef.current)
 
   return (
@@ -23,7 +23,7 @@ const ScoreComponent = ({ score, itemId }) => {
 
       <span>{score}</span>
 
-      <button onClick={handleDecrementScoreDispatch}>
+      <button onClick={handleDecrementScoreClick}>
         <div className="icon-img">
           <img src="/images/icon-minus.svg" alt="" />
         </div>
