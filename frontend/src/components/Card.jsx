@@ -7,31 +7,19 @@ import UserProfile, { UserActions } from "./UserProfile"
 const Card = ({
   item
 }) => {
-  const {dispatch} = useContext(StateContext)
+  const {scoreIncremented, scoreDecremented} = useContext(StateContext)
   const currentScoreRef = useRef(item.score)
 
-  const handleIncrementScoreDispatch = () =>
-    dispatch({
-      type: 'INCREMENT_SCORE',
-      payload: {
-        id: item.id,
-        currentScore: currentScoreRef.current
-      }
-    })
+  const handleIncrementScoreClick = () =>
+    scoreIncremented(item.id, currentScoreRef.current)
 
   const handleDecrementScoreDispatch = () =>
-    dispatch({
-      type: 'DECREMENT_SCORE',
-      payload: {
-        id: item.id,
-        currentScore: currentScoreRef.current
-      }
-    })
+    scoreDecremented(item.id, currentScoreRef.current)
 
   return (
     <div className="card">
       <div className="score-component">
-        <button onClick={handleIncrementScoreDispatch}>
+        <button onClick={handleIncrementScoreClick}>
           <div className="icon-img">
             <img src="/images/icon-plus.svg" alt="" />
           </div>
