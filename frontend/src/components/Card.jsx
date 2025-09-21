@@ -3,6 +3,7 @@ import { StateContext } from "../context"
 import { useRef } from "react"
 import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
+import { useState } from "react"
 
 const ScoreComponent = ({ score, commentId }) => {
   const {actions} = useContext(StateContext)
@@ -37,6 +38,8 @@ const ScoreComponent = ({ score, commentId }) => {
 const Card = ({
   item
 }) => {
+  const [isHidden, setIsHidden] = useState(false)
+
   return (
     <div className="container">
       <div className="card">
@@ -51,7 +54,7 @@ const Card = ({
             <span className="comment-date">{item.createdAt}</span>
 
             <UserActions
-              commentId={item.id}
+              toggleForm={() => setIsHidden(prev => !prev)}
               username={item.user}
             />
           </div>
@@ -67,10 +70,12 @@ const Card = ({
         </div>
       </div>
 
-      <FormComponent
-        placeholderValue='Add comment!'
-        onSubmitUpdate={() => {}}
-      />
+      {isHidden && (
+        <FormComponent
+          placeholderValue='Add comment!'
+          onSubmitUpdate={() => {}}
+        />
+      )}
     </div>
   )
 }
