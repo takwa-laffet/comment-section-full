@@ -9,49 +9,59 @@ import data from './data/comments.json'
 export function useComments() {
     const [comments, dispatch] = useReducer(reducer, data)
 
+    const scoreIncremented = (id, currentScore) =>
+        dispatch({
+            type: 'INCREMENT_SCORE',
+            payload: {
+                id,
+                currentScore
+            }
+        })
+
+    const scoreDecremented = (id, currentScore) =>
+        dispatch({
+            type: 'DECREMENT_SCORE',
+            payload: {
+                id,
+                currentScore
+            }
+        })
+
+    const commentCreated = content =>
+        dispatch({
+            type: 'CREATE_COMMENT',
+            payload: {
+                content
+            }
+        })
+
+    const replyCreated = (id, username, content) =>
+        dispatch({
+            type: 'CREATE_REPLY',
+            payload: {
+                id,
+                username,
+                content
+            }
+        })
+
+    const commentEdited = (id, content) =>
+        dispatch({
+            type: 'EDIT_COMMENT',
+            payload: {
+                id,
+                content
+            }
+        })
+
     return {
         comments,
         actions: {
-            scoreIncremented: (id, currentScore) =>
-                dispatch({
-                    type: 'INCREMENT_SCORE',
-                    payload: {
-                        id,
-                        currentScore
-                    }
-                }),
-            scoreDecremented: (id, currentScore) =>
-                dispatch({
-                    type: 'DECREMENT_SCORE',
-                    payload: {
-                        id,
-                        currentScore
-                    }
-                }),
-            commentCreated: content =>
-                dispatch({
-                    type: 'CREATE_COMMENT',
-                    payload: {
-                        content
-                    }
-                }),
-            replyCreated: (id, username, content) =>
-                dispatch({
-                    type: 'CREATE_REPLY',
-                    payload: {
-                        id,
-                        username,
-                        content
-                    }
-                }),
-            commentEdited: (id, content) =>
-                dispatch({
-                    type: 'EDIT_COMMENT',
-                    payload: {
-                        id,
-                        content
-                    }
-                })
+            scoreIncremented,
+            scoreDecremented,
+            commentCreated,
+            replyCreated,
+            commentEdited
         }
     }
 }
