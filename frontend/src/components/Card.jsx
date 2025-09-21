@@ -2,6 +2,7 @@ import { useContext } from "react"
 import { StateContext } from "../context"
 import { useRef } from "react"
 import UserActions, { UserProfile } from "./UserActions"
+import FormComponent from "./FormComponent"
 
 const ScoreComponent = ({ score, commentId }) => {
   const {actions} = useContext(StateContext)
@@ -37,32 +38,39 @@ const Card = ({
   item
 }) => {
   return (
-    <div className="card">
-      <ScoreComponent
-        score={item.score}
-        commentId={item.id}
-      />
+    <div className="container">
+      <div className="card">
+        <ScoreComponent
+          score={item.score}
+          commentId={item.id}
+        />
 
-      <div className="content">
-        <div className="profile-header">
-          <UserProfile username={item.user} />
-          <span className="comment-date">{item.createdAt}</span>
+        <div className="content">
+          <div className="profile-header">
+            <UserProfile username={item.user} />
+            <span className="comment-date">{item.createdAt}</span>
 
-          <UserActions
-            commentId={item.id}
-            username={item.user}
-          />
+            <UserActions
+              commentId={item.id}
+              username={item.user}
+            />
+          </div>
+
+          {item.replyingTo ? (
+            <p>
+              <span className="replying-to">@{item.replyingTo} </span>
+              {item.content}
+            </p>
+          ) : (
+            <p>{item.content}</p>
+          )}
         </div>
-
-        {item.replyingTo ? (
-          <p>
-            <span className="replying-to">@{item.replyingTo} </span>
-            {item.content}
-          </p>
-        ) : (
-          <p>{item.content}</p>
-        )}
       </div>
+
+      <FormComponent
+        placeholderValue='Add comment!'
+        onSubmitUpdate={() => {}}
+      />
     </div>
   )
 }

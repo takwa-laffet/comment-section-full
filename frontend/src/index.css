@@ -236,7 +236,7 @@ span.comment-date {
     align-items: flex-start;
 }
 
-.comment-wrapper .form-component {
+.comment .form-component {
     margin-top: -1.5em;
     margin-bottom: 1em;
     border-top-left-radius: 0;
