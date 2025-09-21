@@ -11,35 +11,35 @@ export const StateContext = createContext()
 function StateProvider({ children }) {
     const [comments, dispatch] = useReducer(reducer, data)
 
-    const scoreIncremented = (id, currentScore) =>
-        dispatch({
-            type: 'INCREMENT_SCORE',
-            payload: {
-                id,
-                currentScore
-            }
-        })
-
-    const scoreDecremented = (id, currentScore) =>
-        dispatch({
-            type: 'DECREMENT_SCORE',
-            payload: {
-                id,
-                currentScore
-            }
-        })
-
-    const replyCreated = (id, username) =>
-        dispatch({
-            type: 'CREATE_REPLY',
-            payload: {
-                id,
-                username
-            }
-        })
+    const actions = {
+        scoreIncremented: (id, currentScore) =>
+            dispatch({
+                type: 'INCREMENT_SCORE',
+                payload: {
+                    id,
+                    currentScore
+                }
+            }),
+        scoreDecremented: (id, currentScore) =>
+            dispatch({
+                type: 'DECREMENT_SCORE',
+                payload: {
+                    id,
+                    currentScore
+                }
+            }),
+        replyCreated: (id, username) =>
+            dispatch({
+                type: 'CREATE_REPLY',
+                payload: {
+                    id,
+                    username
+                }
+            })
+    }
 
     return (
-        <StateContext.Provider value={{comments, dispatch, scoreIncremented, scoreDecremented, replyCreated}}>
+        <StateContext.Provider value={{comments, actions}}>
             {children}
         </StateContext.Provider>
     )

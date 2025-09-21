@@ -7,14 +7,14 @@ import UserProfile, { UserActions } from "./UserProfile"
 const Card = ({
   item
 }) => {
-  const {scoreIncremented, scoreDecremented} = useContext(StateContext)
+  const {actions} = useContext(StateContext)
   const currentScoreRef = useRef(item.score)
 
   const handleIncrementScoreClick = () =>
-    scoreIncremented(item.id, currentScoreRef.current)
+    actions.scoreIncremented(item.id, currentScoreRef.current)
 
   const handleDecrementScoreDispatch = () =>
-    scoreDecremented(item.id, currentScoreRef.current)
+    actions.scoreDecremented(item.id, currentScoreRef.current)
 
   return (
     <div className="card">

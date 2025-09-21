@@ -6,13 +6,13 @@ export const UserActions = ({
   commentId,
   username
 }) => {
-  const {replyCreated} = useContext(StateContext)
+  const {actions} = useContext(StateContext)
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.username === username
 
   const handleReplyClick = () =>
     // accesses the object directly so you could find the parent comment through the 'parentId' property
-    replyCreated(commentId, username)
+    actions.replyCreated(commentId, username)
 
   return (
     <div className="actions">
