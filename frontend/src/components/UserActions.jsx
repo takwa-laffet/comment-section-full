@@ -2,16 +2,29 @@ import users from '../data/users.json'
 import { useContext } from 'react'
 import { StateContext } from '../context'
 
-export const UserActions = ({
+export const UserProfile = ({ username }) => {
+  const user = users.byUsername[username] || users.currentUser
+
+  return (
+    <div className="user-profile">
+      <div className="user-avatar">
+        <img src={user.image.png} alt="" />
+      </div>
+
+      <h3>{user.username}</h3>
+    </div>
+  )
+}
+
+function UserActions({
   commentId,
   username
-}) => {
+}) {
   const {actions} = useContext(StateContext)
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.username === username
 
   const handleReplyClick = () =>
-    // accesses the object directly so you could find the parent comment through the 'parentId' property
     actions.replyCreated(commentId, username)
 
   return (
@@ -49,18 +62,4 @@ export const UserActions = ({
   )
 }
 
-function UserProfile({ username }) {
-  const user = users.byUsername[username] || users.currentUser
-
-  return (
-    <div className="user-profile">
-      <div className="user-avatar">
-        <img src={user.image.png} alt="" />
-      </div>
-
-      <h3>{user.username}</h3>
-    </div>
-  )
-}
-
-export default UserProfile
+export default UserActions

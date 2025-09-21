@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { StateContext } from "../context"
 import { useRef } from "react"
-import UserProfile, { UserActions } from "./UserProfile"
+import UserActions, { UserProfile } from "./UserActions"
 
 const ScoreComponent = ({ score, commentId }) => {
   const {actions} = useContext(StateContext)
