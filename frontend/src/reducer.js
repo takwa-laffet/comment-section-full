@@ -3,33 +3,32 @@ import users from './data/users.json'
 export function reducer(state, action) {
     const clonedState = structuredClone(state)
     const comment = clonedState.byId[action.payload.id]
-    const newId = Math.max.apply(null, state.allId) + 1
 
     switch (action.type) {
         case 'CREATE_COMMENT':
-            clonedState.byId[newId] = {
+            clonedState.byId[action.payload.id] = {
                 content: action.payload.content,
                 score: 0,
                 replies: [],
-                id: newId,
+                id: action.payload.id,
                 parentId: null,
                 replyingTo: null,
                 createdAt: 'just now',
                 user: users.currentUser.username
             }
 
-            clonedState.allId.push(newId)
+            clonedState.allId.push(action.payload.id)
 
             return clonedState
             
         case 'CREATE_REPLY':
             const targetId = comment?.parentId || action.payload.id
             
-            clonedState.byId[newId] = {
+            clonedState.byId[action.payload.newId] = {
                 content: action.payload.content,
                 score: 0,
                 replies: null,
-                id: newId,
+                id: action.payload.newId,
                 parentId: targetId,
                 replyingTo: action.payload.username,
                 createdAt: 'just now',
@@ -37,8 +36,8 @@ export function reducer(state, action) {
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
-            clonedState.byId[targetId].replies.push(newId)
-            clonedState.allId.push(newId)
+            clonedState.byId[targetId].replies.push(action.payload.newId)
+            clonedState.allId.push(action.payload.newId)
 
             return clonedState
 
