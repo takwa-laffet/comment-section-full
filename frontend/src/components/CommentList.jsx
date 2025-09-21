@@ -12,7 +12,7 @@ function CommentList() {
         const comment = comments.byId[id]
 
         return (
-          <div className="comment">
+          <div className="comment" key={id}>
             <Card item={comment} />
 
             <div className="replies-list">
