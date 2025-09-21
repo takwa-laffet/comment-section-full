@@ -3,15 +3,15 @@ import { StateContext } from "../context"
 import { useRef } from "react"
 import UserProfile, { UserActions } from "./UserProfile"
 
-const ScoreComponent = ({ score, itemId }) => {
+const ScoreComponent = ({ score, commentId }) => {
   const {actions} = useContext(StateContext)
   const currentScoreRef = useRef(score)
 
   const handleIncrementScoreClick = () =>
-    actions.scoreIncremented(itemId, currentScoreRef.current)
+    actions.scoreIncremented(commentId, currentScoreRef.current)
 
   const handleDecrementScoreClick = () =>
-    actions.scoreDecremented(itemId, currentScoreRef.current)
+    actions.scoreDecremented(commentId, currentScoreRef.current)
 
   return (
     <div className="score-component">
@@ -40,7 +40,7 @@ const Card = ({
     <div className="card">
       <ScoreComponent
         score={item.score}
-        itemId={item.id}
+        commentId={item.id}
       />
 
       <div className="content">
