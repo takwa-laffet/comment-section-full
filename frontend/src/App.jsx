@@ -1,11 +1,11 @@
-import CommentList from './components/CommentList'
+import CommentSection from './components/CommentSection'
 import StateProvider from './context'
 
 function App() {
   return (
     <div className="App">
       <StateProvider>
-        <CommentList />
+        <CommentSection />
       </StateProvider>
     </div>
   )
