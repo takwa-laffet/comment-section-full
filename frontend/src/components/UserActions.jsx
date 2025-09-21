@@ -19,7 +19,8 @@ export const UserProfile = ({ username }) => {
 function UserActions({
   username,
   toggleReplyForm,
-  toggleEditForm
+  toggleEditForm,
+  deleteComment
 }) {
   const {actions} = useContext(StateContext)
   // mimicks user authentication for now
@@ -30,6 +31,9 @@ function UserActions({
 
   const handleEditClick = () =>
     toggleEditForm()
+
+  const handleDeleteClick = () =>
+    deleteComment()
 
   return (
     <div className="actions">
@@ -54,7 +58,7 @@ function UserActions({
       )}
 
       {isCurrentUser && (
-        <button>
+        <button onClick={handleDeleteClick}>
             <div className="icon-img">
               <img src="/images/icon-delete.svg" alt="" />
             </div>

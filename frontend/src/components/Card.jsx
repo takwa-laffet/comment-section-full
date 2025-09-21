@@ -40,6 +40,8 @@ const Card = ({
   const [isReplying, setIsReplying] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
 
+  if (!item) return
+
   return (
     <div className="container">
       <div className="card">
@@ -56,6 +58,7 @@ const Card = ({
             <UserActions
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
+              deleteComment={() => actions.commentDeleted(item.id)}
               username={item.user}
             />
           </div>

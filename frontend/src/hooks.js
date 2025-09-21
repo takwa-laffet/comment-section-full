@@ -45,6 +45,14 @@ export function useComments() {
             }
         })
 
+    const commentDeleted = id =>
+        dispatch({
+            type: 'DELETE_COMMENT',
+            payload: {
+                id
+            }
+        })
+
     const commentEdited = (id, content) =>
         dispatch({
             type: 'EDIT_COMMENT',
@@ -61,7 +69,8 @@ export function useComments() {
             scoreDecremented,
             commentCreated,
             replyCreated,
-            commentEdited
+            commentEdited,
+            commentDeleted
         }
     }
 }

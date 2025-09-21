@@ -5,6 +5,7 @@ export const StateContext = createContext()
 
 function StateProvider({ children }) {
     const {comments, actions} = useComments()
+    console.log(comments)
 
     return (
         <StateContext.Provider value={{comments, actions}}>

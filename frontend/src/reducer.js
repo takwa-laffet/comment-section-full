@@ -23,7 +23,7 @@ export function reducer(state, action) {
             return clonedState
             
         case 'CREATE_REPLY':
-            const targetId = comment.parentId || action.payload.id
+            const targetId = comment?.parentId || action.payload.id
             
             clonedState.byId[newId] = {
                 content: action.payload.content,
@@ -45,6 +45,13 @@ export function reducer(state, action) {
         case 'EDIT_COMMENT':
             comment.content = action.payload.content
             return clonedState
+
+        case 'DELETE_COMMENT': {
+            const {[action.payload.id]: comment, ...rest} = clonedState.byId
+            clonedState.allId = clonedState.allId.filter(id => id !== comment.id)
+            clonedState.byId = rest
+            return clonedState
+        }
 
         case 'INCREMENT_SCORE': {
             clonedState.byId[action.payload.id] = {
