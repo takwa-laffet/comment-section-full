@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { StateContext } from "../App"
+import { StateContext } from "../context"
 import { useRef } from "react"
 import UserProfile, { UserActions } from "./UserProfile"
 

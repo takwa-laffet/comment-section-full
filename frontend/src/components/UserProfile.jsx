@@ -1,6 +1,6 @@
 import users from '../data/users.json'
 import { useContext } from 'react'
-import { StateContext } from '../App'
+import { StateContext } from '../context'
 
 export const UserActions = ({
   commentId,

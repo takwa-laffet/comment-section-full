@@ -1,7 +1,5 @@
-import { createContext } from 'react'
 import CommentList from './components/CommentList'
-
-export const StateContext = createContext()
+import StateProvider from './context'
 
 // keeping it here to access it later
 const SignIn = () => {
@@ -26,7 +24,9 @@ const SignIn = () => {
 function App() {
   return (
     <div className="App">
-      <CommentList />
+      <StateProvider>
+        <CommentList />
+      </StateProvider>
     </div>
   )
 }
