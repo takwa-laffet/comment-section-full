@@ -14,8 +14,8 @@ const CurrentUserAvatar = () => {
 }
 
 function FormComponent({
-    value,
-    placeholderValue,
+    value = "",
+    placeholderValue = "",
     onSubmitUpdate
 }) {
     const textAreaRef = React.useRef(null)
@@ -43,7 +43,7 @@ function FormComponent({
             <CurrentUserAvatar />
 
             <form action="#" onSubmit={handleSubmit}>
-                <textarea name="comment" id="comment" defaultValue={value || ''} placeholder={placeholderValue} ref={textAreaRef}></textarea>
+                <textarea name="comment" id="comment" defaultValue={value} placeholder={placeholderValue} ref={textAreaRef}></textarea>
                 <button>Send</button>
             </form>
         </div>

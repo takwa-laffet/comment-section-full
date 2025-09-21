@@ -18,17 +18,18 @@ export const UserProfile = ({ username }) => {
 
 function UserActions({
   username,
-  toggleForm
+  toggleReplyForm,
+  toggleEditForm
 }) {
   const {actions} = useContext(StateContext)
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.username === username
 
   const handleReplyClick = () =>
-    toggleForm()
+    toggleReplyForm()
 
   const handleEditClick = () =>
-    toggleForm()
+    toggleEditForm()
 
   return (
     <div className="actions">

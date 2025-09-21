@@ -38,7 +38,8 @@ const ScoreComponent = ({ score, commentId }) => {
 const Card = ({
   item
 }) => {
-  const [isHidden, setIsHidden] = useState(false)
+  const [isReplying, setIsReplying] = useState(false)
+  const [isEditing, setIsEditing] = useState(false)
 
   return (
     <div className="container">
@@ -54,7 +55,8 @@ const Card = ({
             <span className="comment-date">{item.createdAt}</span>
 
             <UserActions
-              toggleForm={() => setIsHidden(prev => !prev)}
+              toggleReplyForm={() => setIsReplying(prev => !prev)}
+              toggleEditForm={() => setIsEditing(prev => !prev)}
               username={item.user}
             />
           </div>
@@ -70,10 +72,17 @@ const Card = ({
         </div>
       </div>
 
-      {isHidden && (
+      {isReplying && (
         <FormComponent
-          placeholderValue='Add comment!'
-          onSubmitUpdate={() => {}}
+          placeholderValue='Add reply'
+          onSubmitUpdate={() => console.log('The reply functionality')}
+        />
+      )}
+
+      {isEditing && (
+        <FormComponent
+          value={item.content}
+          onSubmitUpdate={() => console.log('The edit functionality')}
         />
       )}
     </div>
