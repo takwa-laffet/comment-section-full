@@ -16,7 +16,7 @@ function CommentList() {
             <Card item={comment} />
 
             <div className="replies-list">
-              {comment.replies.map(replyId => (
+              {comment.replies && comment.replies.map(replyId => (
                 <Card
                   item={comments.byId[replyId]}
                   key={replyId}

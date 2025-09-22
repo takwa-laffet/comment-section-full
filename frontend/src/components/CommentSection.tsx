@@ -11,6 +11,7 @@ function CommentSection() {
             <CommentList />
 
             <FormComponent
+                value=""
                 placeholderValue="Add a comment..."
                 onSubmitUpdate={content => actions.commentCreated(content)}
             />

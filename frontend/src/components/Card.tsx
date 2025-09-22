@@ -2,8 +2,15 @@ import { useContext, useState, useRef } from "react"
 import { StateContext } from "../context"
 import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
+import { Comment } from "../context"
 
-const ScoreComponent = ({ score, commentId }) => {
+const ScoreComponent = ({
+  score,
+  commentId
+}: {
+  score: number
+  commentId: string
+}) => {
   const {actions} = useContext(StateContext)
   const currentScoreRef = useRef(score)
 
@@ -35,6 +42,8 @@ const ScoreComponent = ({ score, commentId }) => {
 // This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
 const Card = ({
   item
+}: {
+  item: Comment
 }) => {
   const {actions} = useContext(StateContext)
   const [isReplying, setIsReplying] = useState(false)
@@ -43,10 +52,10 @@ const Card = ({
 
   if (!item) return
 
-  const handleAddReplyDispatch = content =>
+  const handleAddReplyDispatch = (content: string) =>
     actions.replyCreated(item.id, item.user, content)
 
-  const handleEditCommentDispatch = content =>
+  const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(item.id, content)
 
   const handleCancelClick = () =>

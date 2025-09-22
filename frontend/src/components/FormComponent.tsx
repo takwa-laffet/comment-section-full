@@ -17,18 +17,22 @@ function FormComponent({
     value = "",
     placeholderValue = "",
     onSubmitUpdate
+}: {
+    value: string
+    placeholderValue: string
+    onSubmitUpdate: (content: string) => void
 }) {
-    const textAreaRef = React.useRef(null)
+    const textAreaRef = React.useRef<HTMLTextAreaElement>(null)
     
-    const handleSubmit = e => {
+    const handleSubmit: React.FormEventHandler = (e) => {
         e.preventDefault()
         
-        const formElement = e.target
+        const formElement = e.target as HTMLFormElement
         const formData = new FormData(formElement)
 
         const content = formData.get('comment')
 
-        if (content) onSubmitUpdate(content)
+        if (content) onSubmitUpdate(content as string)
 
         formElement.reset()
     }

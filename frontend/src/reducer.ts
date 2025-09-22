@@ -1,6 +1,13 @@
 import users from './data/users.json'
+import { Comment } from './context'
 
-export function reducer(state, action) {
+export function reducer(state: {
+    byId: Record<string, Comment>
+    allId: string[]
+}, action: {
+    type: string
+    payload: any
+}) {
     const clonedState = structuredClone(state)
     const comment = clonedState.byId[action.payload.id]
 
@@ -25,6 +32,7 @@ export function reducer(state, action) {
             
         case 'CREATE_REPLY':
             const targetId = comment?.parentId || action.payload.id
+            const targetComment = clonedState.byId[targetId]
             
             clonedState.byId[action.payload.newId] = {
                 content: action.payload.content,
@@ -38,7 +46,7 @@ export function reducer(state, action) {
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
-            clonedState.byId[targetId].replies.push(action.payload.newId)
+            targetComment.replies && targetComment.replies.push(action.payload.newId)
             clonedState.allId.push(action.payload.newId)
 
             return clonedState
