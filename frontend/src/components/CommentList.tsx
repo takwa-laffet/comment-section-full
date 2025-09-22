@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { StateContext } from "../context"
-import Card from "./Card"
+import Comment from "./Comment"
 
 function CommentList() {
   const {comments} = useContext(StateContext)
@@ -13,12 +13,12 @@ function CommentList() {
 
         return (
           <div className="comment" key={id}>
-            <Card item={comment} />
+            <Comment comment={comment} />
 
             <div className="replies-list">
               {comment.replies && comment.replies.map(replyId => (
-                <Card
-                  item={comments.byId[replyId]}
+                <Comment
+                  comment={comments.byId[replyId]}
                   key={replyId}
                 />
               ))}

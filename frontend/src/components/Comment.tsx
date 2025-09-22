@@ -2,7 +2,7 @@ import { useContext, useState, useRef } from "react"
 import { CommentId, StateContext } from "../context"
 import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
-import { Comment } from "../context"
+import { type Comment } from "../context"
 
 const ScoreComponent = ({
   score,
@@ -68,52 +68,52 @@ const DeleteModal = ({
 }
 
 // This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
-const Card = ({
-  item
+const Comment = ({
+  comment
 }: {
-  item: Comment
+  comment: Comment
 }) => {
   const {actions} = useContext(StateContext)
   const [isReplying, setIsReplying] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [isModalHidden, setIsModalHidden] = useState(true)
 
-  if (!item) return
+  if (!comment) return
 
   const handleAddReplyDispatch = (content: string) =>
-    actions.replyCreated(item.id, item.user, content)
+    actions.replyCreated(comment.id, comment.user, content)
 
   const handleEditCommentDispatch = (content: string) =>
-    actions.commentEdited(item.id, content)
+    actions.commentEdited(comment.id, content)
 
   return (
     <div className="container">
       <div className="card">
         <ScoreComponent
-          score={item.score}
-          commentId={item.id}
+          score={comment.score}
+          commentId={comment.id}
         />
 
         <div className="content">
           <div className="profile-header">
-            <UserProfile username={item.user} />
-            <span className="comment-date">{item.createdAt}</span>
+            <UserProfile username={comment.user} />
+            <span className="comment-date">{comment.createdAt}</span>
 
             <UserActions
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
               toggleDeleteModal={() => setIsModalHidden(false)}
-              username={item.user}
+              username={comment.user}
             />
           </div>
 
-          {item.replyingTo ? (
+          {comment.replyingTo ? (
             <p>
-              <span className="replying-to">@{item.replyingTo} </span>
-              {item.content}
+              <span className="replying-to">@{comment.replyingTo} </span>
+              {comment.content}
             </p>
           ) : (
-            <p>{item.content}</p>
+            <p>{comment.content}</p>
           )}
         </div>
       </div>
@@ -129,14 +129,14 @@ const Card = ({
       {isEditing && (
         <FormComponent
           placeholderValue=""
-          value={item.content}
+          value={comment.content}
           onSubmitUpdate={handleEditCommentDispatch}
         />
       )}
 
       {!isModalHidden && (
         <DeleteModal
-          commentId={item.id}
+          commentId={comment.id}
           updateModalVisibility={setIsModalHidden}
         />
       )}
@@ -144,4 +144,4 @@ const Card = ({
   )
 }
 
-export default Card
+export default Comment
