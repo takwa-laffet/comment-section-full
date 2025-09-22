@@ -39,6 +39,7 @@ const Card = ({
   const {actions} = useContext(StateContext)
   const [isReplying, setIsReplying] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
+  const [isModalHidden, setIsModalHidden] = useState(true)
 
   if (!item) return
 
@@ -58,7 +59,7 @@ const Card = ({
             <UserActions
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
-              deleteComment={() => actions.commentDeleted(item.id)}
+              toggleDeleteModal={() => setIsModalHidden(false)}
               username={item.user}
             />
           </div>
@@ -86,6 +87,18 @@ const Card = ({
           value={item.content}
           onSubmitUpdate={content => actions.commentEdited(item.id, content)}
         />
+      )}
+
+      {!isModalHidden && (
+        <div className="modal-container">
+          <h3>Delete comment</h3>
+          <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
+          
+          <div className="buttons">
+              <button className="cancel" onClick={() => setIsModalHidden(true)}>No, Cancel</button>
+              <button className="confirm" onClick={() => actions.commentDeleted(item.id)}>Yes, Confirm</button>
+          </div>
+        </div>
       )}
     </div>
   )

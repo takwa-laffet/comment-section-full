@@ -20,7 +20,7 @@ function UserActions({
   username,
   toggleReplyForm,
   toggleEditForm,
-  deleteComment
+  toggleDeleteModal
 }) {
   const {actions} = useContext(StateContext)
   // mimicks user authentication for now
@@ -33,7 +33,7 @@ function UserActions({
     toggleEditForm()
 
   const handleDeleteClick = () =>
-    deleteComment()
+    toggleDeleteModal()
 
   return (
     <div className="actions">
