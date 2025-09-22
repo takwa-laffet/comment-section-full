@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid'
     Just keeping this here for reference. I'm going to define some "abstract" methods that update state so I don't have to track dispatch calls throughout the codebase. The easier it gets to modify the way dispatch calls work, the less time I can spend on making several changes within components that shouldn't care how state gets updated.
 */
 
+const newId = uuidv4()
+
 export function useComments() {
     const [comments, dispatch] = useReducer(reducer, data)
 
@@ -28,21 +30,16 @@ export function useComments() {
             }
         })
 
-    const commentCreated = content => {
-        const id = uuidv4()
-
+    const commentCreated = content =>
         dispatch({
             type: 'CREATE_COMMENT',
             payload: {
                 content,
-                id
+                newId
             }
         })
-    }
 
-    const replyCreated = (id, username, content) => {
-        const newId = uuidv4()
-
+    const replyCreated = (id, username, content) =>
         dispatch({
             type: 'CREATE_REPLY',
             payload: {
@@ -52,7 +49,6 @@ export function useComments() {
                 content
             }
         })
-    }
 
     const commentDeleted = id =>
         dispatch({

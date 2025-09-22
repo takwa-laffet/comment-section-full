@@ -6,18 +6,20 @@ export function reducer(state, action) {
 
     switch (action.type) {
         case 'CREATE_COMMENT':
-            clonedState.byId[action.payload.id] = {
+            const newId = action.payload.newId
+
+            clonedState.byId[newId] = {
                 content: action.payload.content,
                 score: 0,
                 replies: [],
-                id: action.payload.id,
+                id: newId,
                 parentId: null,
                 replyingTo: null,
                 createdAt: 'just now',
                 user: users.currentUser.username
             }
 
-            clonedState.allId.push(action.payload.id)
+            clonedState.allId.push(newId)
 
             return clonedState
             
