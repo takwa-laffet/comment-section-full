@@ -1,5 +1,5 @@
 import { useContext, useState, useRef } from "react"
-import { StateContext } from "../context"
+import { CommentId, StateContext } from "../context"
 import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { Comment } from "../context"
@@ -9,7 +9,7 @@ const ScoreComponent = ({
   commentId
 }: {
   score: number
-  commentId: string
+  commentId: CommentId
 }) => {
   const {actions} = useContext(StateContext)
   const currentScoreRef = useRef(score)
@@ -39,6 +39,34 @@ const ScoreComponent = ({
   )
 }
 
+const DeleteModal = ({
+  commentId,
+  updateModalVisibility
+}: {
+  commentId: CommentId
+  updateModalVisibility: React.Dispatch<React.SetStateAction<boolean>>
+}) => {
+  const {actions} = useContext(StateContext)
+
+  const handleCancelClick = () =>
+    updateModalVisibility(true)
+
+  const handleDeleteClick = () =>
+    actions.commentDeleted(commentId)
+
+  return (
+    <div className="modal-container">
+      <h3>Delete comment</h3>
+      <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
+      
+      <div className="buttons">
+          <button className="cancel" onClick={handleCancelClick}>No, Cancel</button>
+          <button className="confirm" onClick={handleDeleteClick}>Yes, Confirm</button>
+      </div>
+    </div>
+  )
+}
+
 // This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
 const Card = ({
   item
@@ -57,12 +85,6 @@ const Card = ({
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(item.id, content)
-
-  const handleCancelClick = () =>
-    setIsModalHidden(true)
-
-  const handleDeleteClick = () =>
-    actions.commentDeleted(item.id)
 
   return (
     <div className="container">
@@ -113,15 +135,10 @@ const Card = ({
       )}
 
       {!isModalHidden && (
-        <div className="modal-container">
-          <h3>Delete comment</h3>
-          <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
-          
-          <div className="buttons">
-              <button className="cancel" onClick={handleCancelClick}>No, Cancel</button>
-              <button className="confirm" onClick={handleDeleteClick}>Yes, Confirm</button>
-          </div>
-        </div>
+        <DeleteModal
+          commentId={item.id}
+          updateModalVisibility={setIsModalHidden}
+        />
       )}
     </div>
   )
