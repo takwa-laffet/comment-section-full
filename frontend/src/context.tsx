@@ -12,11 +12,13 @@ export type Comment = {
     createdAt: string
 }
 
-export type CreateComment = (content: string) => void
-export type CreateReply = (commentId: string, username: string, content: string) => void
-export type EditComment = (commentId: string, content: string) => void
-export type DeleteComment = (commentId: string) => void
-export type UpdateScore = (commentId: string, currentScore: number) => void
+export type CommentId = Comment['id']
+
+export type CreateComment = (content: Comment['content']) => void
+export type CreateReply = (commentId: CommentId, username: Comment['user'], content: Comment['content']) => void
+export type EditComment = (commentId: CommentId, content: string) => void
+export type DeleteComment = (commentId: CommentId) => void
+export type UpdateScore = (commentId: CommentId, currentScore: number) => void
 
 export const StateContext = createContext<{
     comments: {

@@ -1,5 +1,22 @@
 import users from './data/users.json'
-import { Comment } from './context'
+import { Comment, CommentId } from './context'
+
+interface CreateCommentPayload extends Pick<Comment, 'content'> {
+    newId: string
+}
+
+interface CreateReplyPayload extends CreateCommentPayload {
+    id: CommentId
+    username: string
+}
+
+interface EditCommentPayload extends Pick<Comment, 'content'> {}
+interface DeleteCommentPayload extends Pick<Comment, 'id'> {}
+
+interface UpdateScorePayload {
+    id: CommentId
+    currentScore: number
+}
 
 export function reducer(state: {
     byId: Record<string, Comment>
@@ -12,11 +29,12 @@ export function reducer(state: {
     const comment = clonedState.byId[action.payload.id]
 
     switch (action.type) {
-        case 'CREATE_COMMENT':
-            const newId = action.payload.newId
+        case 'CREATE_COMMENT': {
+            const payload = action.payload as CreateCommentPayload
+            const newId = payload.newId
 
             clonedState.byId[newId] = {
-                content: action.payload.content,
+                content: payload.content,
                 score: 0,
                 replies: [],
                 id: newId,
@@ -29,52 +47,62 @@ export function reducer(state: {
             clonedState.allId.push(newId)
 
             return clonedState
+        }
             
-        case 'CREATE_REPLY':
-            const targetId = comment?.parentId || action.payload.id
+        case 'CREATE_REPLY': {
+            const payload = action.payload as CreateReplyPayload
+            const targetId = comment?.parentId || payload.id
             const targetComment = clonedState.byId[targetId]
             
-            clonedState.byId[action.payload.newId] = {
-                content: action.payload.content,
+            clonedState.byId[payload.newId] = {
+                content: payload.content,
                 score: 0,
                 replies: null,
-                id: action.payload.newId,
+                id: payload.newId,
                 parentId: targetId,
-                replyingTo: action.payload.username,
+                replyingTo: payload.username,
                 createdAt: 'just now',
                 user: users.currentUser.username
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
-            targetComment.replies && targetComment.replies.push(action.payload.newId)
-            clonedState.allId.push(action.payload.newId)
+            targetComment.replies && targetComment.replies.push(payload.newId)
+            clonedState.allId.push(payload.newId)
 
             return clonedState
+        }
 
-        case 'EDIT_COMMENT':
-            comment.content = action.payload.content
+        case 'EDIT_COMMENT': {
+            const payload = action.payload as EditCommentPayload
+            comment.content = payload.content
             return clonedState
+        }
 
         case 'DELETE_COMMENT': {
-            const {[action.payload.id]: comment, ...rest} = clonedState.byId
+            const payload = action.payload as DeleteCommentPayload
+            const {[payload.id]: comment, ...rest} = clonedState.byId
             clonedState.allId = clonedState.allId.filter(id => id !== comment.id)
             clonedState.byId = rest
             return clonedState
         }
 
         case 'INCREMENT_SCORE': {
-            clonedState.byId[action.payload.id] = {
+            const payload = action.payload as UpdateScorePayload
+
+            clonedState.byId[payload.id] = {
                 ...comment,
-                score: comment.score == action.payload.currentScore ? comment.score + 1 : action.payload.currentScore
+                score: comment.score == payload.currentScore ? comment.score + 1 : payload.currentScore
             }
 
             return clonedState
         }
 
         case 'DECREMENT_SCORE': {
-            clonedState.byId[action.payload.id] = {
+            const payload = action.payload as UpdateScorePayload
+
+            clonedState.byId[payload.id] = {
                 ...comment,
-                score: comment.score === action.payload.currentScore ? comment.score - 1 : action.payload.currentScore
+                score: comment.score === payload.currentScore ? comment.score - 1 : payload.currentScore
             }
 
             return clonedState
