@@ -18,10 +18,12 @@ interface UpdateScorePayload {
     currentScore: number
 }
 
-export function reducer(state: {
-    byId: Record<string, Comment>
-    allId: string[]
-}, action: {
+type State = {
+    byId: Record<CommentId, Comment>
+    allId: CommentId[]
+}
+
+export function reducer(state: State, action: {
     type: string
     payload: any
 }) {
@@ -88,23 +90,13 @@ export function reducer(state: {
 
         case 'INCREMENT_SCORE': {
             const payload = action.payload as UpdateScorePayload
-
-            clonedState.byId[payload.id] = {
-                ...comment,
-                score: comment.score == payload.currentScore ? comment.score + 1 : payload.currentScore
-            }
-
+            comment.score = comment.score == payload.currentScore ? comment.score + 1 : payload.currentScore
             return clonedState
         }
 
         case 'DECREMENT_SCORE': {
             const payload = action.payload as UpdateScorePayload
-
-            clonedState.byId[payload.id] = {
-                ...comment,
-                score: comment.score === payload.currentScore ? comment.score - 1 : payload.currentScore
-            }
-
+            comment.score = comment.score === payload.currentScore ? comment.score - 1 : payload.currentScore
             return clonedState
         }
 
