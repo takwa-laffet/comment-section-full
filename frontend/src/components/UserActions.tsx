@@ -32,30 +32,30 @@ function UserActions({
   username,
   toggleReplyForm,
   toggleEditForm,
-  toggleDeleteModal
+  showDeleteModal
 }: {
   username: string
   toggleReplyForm: () => void
   toggleEditForm: () => void
-  toggleDeleteModal: () => void
+  showDeleteModal: () => void
 }) {
   const {actions} = useContext(StateContext)
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.username === username
 
-  const handleToggleReplyFormClick = () =>
+  const handleReplyClick = () =>
     toggleReplyForm()
 
-  const handleToggleEditFormClick = () =>
+  const handleEditClick = () =>
     toggleEditForm()
 
-  const handleToggleDeleteModalClick = () =>
-    toggleDeleteModal()
+  const handleDeleteClick = () =>
+    showDeleteModal()
 
   return (
     <div className="actions">
       {!isCurrentUser && (
-        <button onClick={handleToggleReplyFormClick}>
+        <button onClick={handleReplyClick}>
           <div className="icon-img">
             <img src="/images/icon-reply.svg" alt="" />
           </div>
@@ -65,7 +65,7 @@ function UserActions({
       )}
 
       {isCurrentUser && (
-        <button onClick={handleToggleEditFormClick}>
+        <button onClick={handleEditClick}>
             <div className="icon-img">
               <img src="/images/icon-edit.svg" alt="" />
             </div>
@@ -75,7 +75,7 @@ function UserActions({
       )}
 
       {isCurrentUser && (
-        <button onClick={handleToggleDeleteModalClick}>
+        <button onClick={handleDeleteClick}>
             <div className="icon-img">
               <img src="/images/icon-delete.svg" alt="" />
             </div>

@@ -41,17 +41,17 @@ const ScoreComponent = ({
 
 const DeleteModal = ({
   commentId,
-  updateModalVisibility
+  hideDeleteModal
 }: {
   commentId: CommentId
-  updateModalVisibility: React.Dispatch<React.SetStateAction<boolean>>
+  hideDeleteModal: () => void
 }) => {
   const {actions} = useContext(StateContext)
 
   const handleCancelClick = () =>
-    updateModalVisibility(true)
+    hideDeleteModal()
 
-  const handleDeleteClick = () =>
+  const handleConfirmClick = () =>
     actions.commentDeleted(commentId)
 
   return (
@@ -61,7 +61,7 @@ const DeleteModal = ({
       
       <div className="buttons">
           <button className="cancel" onClick={handleCancelClick}>No, Cancel</button>
-          <button className="confirm" onClick={handleDeleteClick}>Yes, Confirm</button>
+          <button className="confirm" onClick={handleConfirmClick}>Yes, Confirm</button>
       </div>
     </div>
   )
@@ -102,7 +102,7 @@ const Comment = ({
             <UserActions
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
-              toggleDeleteModal={() => setIsModalHidden(false)}
+              showDeleteModal={() => setIsModalHidden(false)}
               username={comment.user}
             />
           </div>
@@ -137,7 +137,7 @@ const Comment = ({
       {!isModalHidden && (
         <DeleteModal
           commentId={comment.id}
-          updateModalVisibility={setIsModalHidden}
+          hideDeleteModal={() => setIsModalHidden(true)}
         />
       )}
     </div>
