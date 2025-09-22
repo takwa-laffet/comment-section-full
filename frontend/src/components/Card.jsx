@@ -43,6 +43,18 @@ const Card = ({
 
   if (!item) return
 
+  const handleAddReplyDispatch = content =>
+    actions.replyCreated(item.id, item.user, content)
+
+  const handleEditCommentDispatch = content =>
+    actions.commentEdited(item.id, content)
+
+  const handleCancelClick = () =>
+    setIsModalHidden(true)
+
+  const handleDeleteClick = () =>
+    actions.commentDeleted(item.id)
+
   return (
     <div className="container">
       <div className="card">
@@ -78,14 +90,14 @@ const Card = ({
       {isReplying && (
         <FormComponent
           placeholderValue='Add reply'
-          onSubmitUpdate={content => actions.replyCreated(item.id, item.user, content)}
+          onSubmitUpdate={handleAddReplyDispatch}
         />
       )}
 
       {isEditing && (
         <FormComponent
           value={item.content}
-          onSubmitUpdate={content => actions.commentEdited(item.id, content)}
+          onSubmitUpdate={handleEditCommentDispatch}
         />
       )}
 
@@ -95,8 +107,8 @@ const Card = ({
           <p>Are you sure you want to delete this comment? This will remove the comment and can't be undone.</p>
           
           <div className="buttons">
-              <button className="cancel" onClick={() => setIsModalHidden(true)}>No, Cancel</button>
-              <button className="confirm" onClick={() => actions.commentDeleted(item.id)}>Yes, Confirm</button>
+              <button className="cancel" onClick={handleCancelClick}>No, Cancel</button>
+              <button className="confirm" onClick={handleDeleteClick}>Yes, Confirm</button>
           </div>
         </div>
       )}
