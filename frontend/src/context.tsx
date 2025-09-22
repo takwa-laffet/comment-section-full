@@ -22,8 +22,8 @@ export type UpdateScore = (commentId: CommentId, currentScore: number) => void
 
 export const StateContext = createContext<{
     comments: {
-        byId: Record<string, Comment>
-        allId: string[]
+        byId: Record<CommentId, Comment>
+        allId: CommentId[]
     },
     actions: {
         commentCreated: CreateComment,
