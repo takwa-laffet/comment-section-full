@@ -26,19 +26,19 @@ function UserActions({
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.username === username
 
-  const handleReplyClick = () =>
+  const handleToggleReplyFormClick = () =>
     toggleReplyForm()
 
-  const handleEditClick = () =>
+  const handleToggleEditFormClick = () =>
     toggleEditForm()
 
-  const handleDeleteClick = () =>
+  const handleToggleDeleteModalClick = () =>
     toggleDeleteModal()
 
   return (
     <div className="actions">
       {!isCurrentUser && (
-        <button onClick={handleReplyClick}>
+        <button onClick={handleToggleReplyFormClick}>
           <div className="icon-img">
             <img src="/images/icon-reply.svg" alt="" />
           </div>
@@ -48,7 +48,7 @@ function UserActions({
       )}
 
       {isCurrentUser && (
-        <button onClick={handleEditClick}>
+        <button onClick={handleToggleEditFormClick}>
             <div className="icon-img">
               <img src="/images/icon-edit.svg" alt="" />
             </div>
@@ -58,7 +58,7 @@ function UserActions({
       )}
 
       {isCurrentUser && (
-        <button onClick={handleDeleteClick}>
+        <button onClick={handleToggleDeleteModalClick}>
             <div className="icon-img">
               <img src="/images/icon-delete.svg" alt="" />
             </div>
