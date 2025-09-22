@@ -99,12 +99,14 @@ const Card = ({
       {isReplying && (
         <FormComponent
           placeholderValue='Add reply'
+          value=""
           onSubmitUpdate={handleAddReplyDispatch}
         />
       )}
 
       {isEditing && (
         <FormComponent
+          placeholderValue=""
           value={item.content}
           onSubmitUpdate={handleEditCommentDispatch}
         />
