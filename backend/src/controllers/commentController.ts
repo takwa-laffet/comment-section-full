@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { db } from "../db"; // assume you have db connection
+import { db } from "../db"; 
 import { AuthRequest } from "../middleware/authMiddleware";
 
 export const createComment = async (req: AuthRequest, res: Response) => {
