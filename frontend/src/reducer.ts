@@ -90,13 +90,13 @@ export function reducer(state: State, action: {
 
         case 'INCREMENT_SCORE': {
             const payload = action.payload as UpdateScorePayload
-            comment.score = comment.score == payload.currentScore ? comment.score + 1 : payload.currentScore
+            comment.score = comment.score === payload.currentScore ? comment.score + 1 : comment.score < payload.currentScore ? comment.score + 2 : payload.currentScore
             return clonedState
         }
 
         case 'DECREMENT_SCORE': {
             const payload = action.payload as UpdateScorePayload
-            comment.score = comment.score === payload.currentScore ? comment.score - 1 : payload.currentScore
+            comment.score = comment.score === payload.currentScore ? comment.score - 1 : comment.score > payload.currentScore ? comment.score - 2 : payload.currentScore
             return clonedState
         }
 
