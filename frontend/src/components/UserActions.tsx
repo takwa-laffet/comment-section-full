@@ -1,13 +1,12 @@
 import users from '../data/users.json'
-import { useContext } from 'react'
-import { StateContext } from '../context'
 
-type User = {
+export type User = {
   image: {
     png: string
     webp: string
   }
   username: string
+  id: string
 }
 
 export const UserProfile = ({
@@ -29,19 +28,19 @@ export const UserProfile = ({
 }
 
 function UserActions({
-  username,
+  userId,
   toggleReplyForm,
   toggleEditForm,
   showDeleteModal
 }: {
-  username: string
+  userId: string
   toggleReplyForm: () => void
   toggleEditForm: () => void
   showDeleteModal: () => void
 }) {
-  const {actions} = useContext(StateContext)
+  const user = (users.byId as Record<string, User>)[userId] || users.currentUser
   // mimicks user authentication for now
-  const isCurrentUser = users.currentUser.username === username
+  const isCurrentUser = users.currentUser.id === user.id
 
   const handleReplyClick = () =>
     toggleReplyForm()

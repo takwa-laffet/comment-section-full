@@ -1,6 +1,6 @@
 import { useContext, useState, useRef } from "react"
 import { CommentId, StateContext } from "../context"
-import UserActions, { UserProfile } from "./UserActions"
+import UserActions, { User, UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
 import users from '../data/users.json'
@@ -80,7 +80,7 @@ const CommentContent = ({
 
   if (!comment) return
 
-  const user = (users.byId as Record<string, any>)[comment.userId] || users.currentUser
+  const user = (users.byId as Record<string, User>)[comment.userId] || users.currentUser
 
   const handleAddReplyDispatch = (content: string) =>
     actions.replyCreated(comment.id, user.username, content)
@@ -105,7 +105,7 @@ const CommentContent = ({
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
               showDeleteModal={() => setIsModalHidden(false)}
-              username={user.username}
+              userId={user.id}
             />
           </div>
 
