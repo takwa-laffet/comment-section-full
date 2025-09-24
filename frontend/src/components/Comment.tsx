@@ -3,7 +3,7 @@ import { CommentId, StateContext } from "../context"
 import UserActions, { User, UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
-import users from '../data/users.json'
+import {users} from '../components/UserActions'
 
 const ScoreComponent = ({
   score,
@@ -80,7 +80,7 @@ const CommentContent = ({
 
   if (!comment) return
 
-  const user = (users.byId as Record<string, User>)[comment.userId] || users.currentUser
+  const user = users.byId[comment.userId] || users.currentUser
 
   const handleAddReplyDispatch = (content: string) =>
     actions.replyCreated(comment.id, user.username, content)

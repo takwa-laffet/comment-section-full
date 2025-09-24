@@ -1,4 +1,4 @@
-import users from '../data/users.json'
+import data from '../data/users.json'
 
 export type User = {
   image: {
@@ -7,6 +7,12 @@ export type User = {
   }
   username: string
   id: string
+}
+
+export const users = data as unknown as {
+  currentUser: User
+  byId: Record<string, User>
+  allId: string[]
 }
 
 export const UserProfile = ({
