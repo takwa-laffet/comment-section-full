@@ -15,12 +15,16 @@ export const users = data as unknown as {
   allId: string[]
 }
 
+export const selectUserById = (userId: User['id']) =>
+  users.currentUser['id'] === userId ? users.currentUser : users.byId[userId]
+
 export const UserProfile = ({
   userId
 }: {
   userId: string
 }) => {
-  const user = (users.byId as Record<string, User>)[userId] || users.currentUser
+  const user = selectUserById(userId)
+  const isCurrentUser = user.id === users.currentUser['id']
 
   return (
     <div className="user-profile">
@@ -28,7 +32,7 @@ export const UserProfile = ({
         <img src={user.image.png} alt="" />
       </div>
 
-      <h3>{user.username}</h3>
+      <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
     </div>
   )
 }
@@ -44,7 +48,7 @@ function UserActions({
   toggleEditForm: () => void
   showDeleteModal: () => void
 }) {
-  const user = (users.byId as Record<string, User>)[userId] || users.currentUser
+  const user = selectUserById(userId)
   // mimicks user authentication for now
   const isCurrentUser = users.currentUser.id === user.id
 
