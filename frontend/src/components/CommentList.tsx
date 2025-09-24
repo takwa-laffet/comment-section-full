@@ -1,6 +1,6 @@
 import { useContext } from "react"
 import { StateContext } from "../context"
-import Comment from "./Comment"
+import Thread from "./Thread"
 
 function CommentList() {
   const {comments} = useContext(StateContext)
@@ -13,7 +13,7 @@ function CommentList() {
         const comment = comments.byId[id]
 
         return (
-          <Comment
+          <Thread
             comment={comment}
             key={id}
           />

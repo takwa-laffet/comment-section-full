@@ -3,7 +3,7 @@ import { CommentId, StateContext } from "../context"
 import UserActions, { User, UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
-import {users} from '../components/UserActions'
+import {users} from './UserActions'
 
 const ScoreComponent = ({
   score,
@@ -68,7 +68,7 @@ const DeleteModal = ({
   )
 }
 
-const CommentContent = ({
+const Comment = ({
   comment
 }: {
   comment: Comment
@@ -102,10 +102,10 @@ const CommentContent = ({
             <span className="comment-date">{comment.createdAt}</span>
 
             <UserActions
+              userId={user.id}
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
               showDeleteModal={() => setIsModalHidden(false)}
-              userId={user.id}
             />
           </div>
 
@@ -146,40 +146,28 @@ const CommentContent = ({
   )
 }
 
-const ReplyList = ({
-  replyIds
-}: {
-  replyIds: CommentId[]
-}) => {
-  const {comments} = useContext(StateContext)
-
-  return (
-    <div className="replies-list">
-      {replyIds.map(replyId => (
-        <CommentContent
-          comment={comments.byId[replyId]}
-          key={replyId}
-        />
-      ))}
-    </div>
-  )
-}
-
 // This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
-const Comment = ({
+const Thread = ({
   comment
 }: {
   comment: Comment
 }) => {
+  const {comments} = useContext(StateContext)
+
   return (
     <div className="thread">
-      <CommentContent comment={comment} />
+      <Comment comment={comment} />
       
-      {comment.replies && (
-        <ReplyList replyIds={comment.replies} />
-      )}
+      <div className="replies-list">
+        {comment.replies?.map(replyId => (
+          <Comment
+            comment={comments.byId[replyId]}
+            key={replyId}
+          />
+        ))}
+      </div>
     </div>
   )
 }
 
-export default Comment
+export default Thread
