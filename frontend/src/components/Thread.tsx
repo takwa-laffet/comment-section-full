@@ -1,6 +1,6 @@
 import { useContext, useState, useRef } from "react"
 import { CommentId, StateContext } from "../context"
-import UserActions, { User, UserProfile } from "./UserActions"
+import UserActions, { selectUserById, User, UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
 import {users} from './UserActions'
@@ -80,10 +80,8 @@ const Comment = ({
 
   if (!comment) return
 
-  const user = comment.userId === users.currentUser.id ? users.currentUser : users.byId[comment.userId]
-
   const handleAddReplyDispatch = (content: string) =>
-    actions.replyCreated(comment.id, user.username, content)
+    actions.replyCreated(comment.id, comment.userId, content)
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
@@ -102,7 +100,7 @@ const Comment = ({
             <span className="comment-date">{comment.createdAt}</span>
 
             <UserActions
-              userId={user.id}
+              userId={comment.userId}
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
               showDeleteModal={() => setIsModalHidden(false)}

@@ -15,8 +15,10 @@ export const users = data as unknown as {
   allId: string[]
 }
 
-export const selectUserById = (userId: User['id']) =>
-  users.currentUser['id'] === userId ? users.currentUser : users.byId[userId]
+export const selectUserById = (userId: User['id']) => {
+  const user = users.byId[userId]
+  return !user ? users.currentUser : user
+}
 
 export const UserProfile = ({
   userId
@@ -24,7 +26,6 @@ export const UserProfile = ({
   userId: string
 }) => {
   const user = selectUserById(userId)
-  const isCurrentUser = user.id === users.currentUser['id']
 
   return (
     <div className="user-profile">
@@ -32,7 +33,7 @@ export const UserProfile = ({
         <img src={user.image.png} alt="" />
       </div>
 
-      <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
+      <h3>{user.username}</h3>
     </div>
   )
 }
@@ -50,7 +51,7 @@ function UserActions({
 }) {
   const user = selectUserById(userId)
   // mimicks user authentication for now
-  const isCurrentUser = users.currentUser.id === user.id
+  const isCurrentUser = users.currentUser.id === user?.id
 
   const handleReplyClick = () =>
     toggleReplyForm()
