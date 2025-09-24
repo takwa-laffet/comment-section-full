@@ -80,7 +80,7 @@ const Comment = ({
 
   if (!comment) return
 
-  const user = users.byId[comment.userId] || users.currentUser
+  const user = comment.userId === users.currentUser.id ? users.currentUser : users.byId[comment.userId]
 
   const handleAddReplyDispatch = (content: string) =>
     actions.replyCreated(comment.id, user.username, content)
