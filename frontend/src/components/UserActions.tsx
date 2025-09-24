@@ -11,11 +11,11 @@ type User = {
 }
 
 export const UserProfile = ({
-  username
+  userId
 }: {
-  username: string
+  userId: string
 }) => {
-  const user = (users.byUsername as Record<string, User>)[username] || users.currentUser
+  const user = (users.byId as Record<string, User>)[userId] || users.currentUser
 
   return (
     <div className="user-profile">

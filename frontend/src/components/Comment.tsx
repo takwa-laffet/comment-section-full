@@ -3,6 +3,7 @@ import { CommentId, StateContext } from "../context"
 import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
+import users from '../data/users.json'
 
 const ScoreComponent = ({
   score,
@@ -77,13 +78,15 @@ const CommentContent = ({
   const [isEditing, setIsEditing] = useState(false)
   const [isModalHidden, setIsModalHidden] = useState(true)
 
+  if (!comment) return
+
+  const user = (users.byId as Record<string, any>)[comment.userId] || users.currentUser
+
   const handleAddReplyDispatch = (content: string) =>
-    actions.replyCreated(comment.id, comment.user, content)
+    actions.replyCreated(comment.id, user.username, content)
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
-
-  if (!comment) return
 
   return (
     <div className="container">
@@ -95,14 +98,14 @@ const CommentContent = ({
 
         <div className="content">
           <div className="profile-header">
-            <UserProfile username={comment.user} />
+            <UserProfile userId={comment.userId} />
             <span className="comment-date">{comment.createdAt}</span>
 
             <UserActions
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
               showDeleteModal={() => setIsModalHidden(false)}
-              username={comment.user}
+              username={user.username}
             />
           </div>
 
