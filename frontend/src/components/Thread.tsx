@@ -153,16 +153,17 @@ const Thread = ({
   comment: Comment
 }) => {
   const {comments} = useContext(StateContext)
+  const replies = comment.replies?.map(replyId => comments.byId[replyId])
 
   return (
     <div className="thread">
       <Comment comment={comment} />
       
       <div className="replies-list">
-        {comment.replies?.map(replyId => (
+        {replies?.map(reply => (
           <Comment
-            comment={comments.byId[replyId]}
-            key={replyId}
+            comment={reply}
+            key={reply.id}
           />
         ))}
       </div>
