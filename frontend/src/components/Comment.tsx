@@ -67,7 +67,7 @@ const DeleteModal = ({
   )
 }
 
-const Comment = ({
+const CommentContent = ({
   comment
 }: {
   comment: Comment
@@ -143,8 +143,27 @@ const Comment = ({
   )
 }
 
+const ReplyList = ({
+  replyIds
+}: {
+  replyIds: CommentId[]
+}) => {
+  const {comments} = useContext(StateContext)
+
+  return (
+    <div className="replies-list">
+      {replyIds.map(replyId => (
+        <CommentContent
+          comment={comments.byId[replyId]}
+          key={replyId}
+        />
+      ))}
+    </div>
+  )
+}
+
 // This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
-const Thread = ({
+const Comment = ({
   comment
 }: {
   comment: Comment
@@ -153,18 +172,13 @@ const Thread = ({
 
   return (
     <div className="thread">
-      <Comment comment={comment} />
+      <CommentContent comment={comment} />
       
-      <div className="replies-list">
-        {comment.replies?.map(replyId => (
-          <Comment
-            comment={comments.byId[replyId]}
-            key={replyId}
-          />
-        ))}
-      </div>
+      {comment.replies && (
+        <ReplyList replyIds={comment.replies} />
+      )}
     </div>
   )
 }
 
-export default Thread
+export default Comment
