@@ -168,8 +168,6 @@ const Comment = ({
 }: {
   comment: Comment
 }) => {
-  const {comments} = useContext(StateContext)
-
   return (
     <div className="thread">
       <CommentContent comment={comment} />

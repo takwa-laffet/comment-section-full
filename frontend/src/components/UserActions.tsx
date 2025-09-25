@@ -24,6 +24,7 @@ export const UserProfile = ({
   userId: string
 }) => {
   const user = selectUserById(userId)
+  const isCurrentUser = users.currentUser['id'] === userId
 
   return (
     <div className="user-profile">
@@ -31,7 +32,7 @@ export const UserProfile = ({
         <img src={user.image.png} alt="" />
       </div>
 
-      <h3>{user.username}</h3>
+      <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
     </div>
   )
 }
