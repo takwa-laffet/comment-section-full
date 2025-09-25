@@ -1,9 +1,8 @@
 import { useContext, useState, useRef } from "react"
 import { CommentId, StateContext } from "../context"
-import UserActions, { selectUserById, User, UserProfile } from "./UserActions"
+import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
-import {users} from './UserActions'
 
 const ScoreComponent = ({
   score,
