@@ -67,8 +67,7 @@ const DeleteModal = ({
   )
 }
 
-// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
-const Comment = ({
+const CommentContent = ({
   comment
 }: {
   comment: Comment
@@ -81,14 +80,14 @@ const Comment = ({
   if (!comment) return
 
   const handleAddReplyDispatch = (content: string) =>
-    actions.replyCreated(comment.id, comment.user, content)
+    actions.replyCreated(comment.id, comment.userId, content)
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
 
   return (
     <div className="container">
-      <div className="card">
+      <div className="comment">
         <ScoreComponent
           score={comment.score}
           commentId={comment.id}
@@ -96,14 +95,14 @@ const Comment = ({
 
         <div className="content">
           <div className="profile-header">
-            <UserProfile username={comment.user} />
+            <UserProfile userId={comment.userId} />
             <span className="comment-date">{comment.createdAt}</span>
 
             <UserActions
+              userId={comment.userId}
               toggleReplyForm={() => setIsReplying(prev => !prev)}
               toggleEditForm={() => setIsEditing(prev => !prev)}
               showDeleteModal={() => setIsModalHidden(false)}
-              username={comment.user}
             />
           </div>
 
@@ -139,6 +138,42 @@ const Comment = ({
           commentId={comment.id}
           hideDeleteModal={() => setIsModalHidden(true)}
         />
+      )}
+    </div>
+  )
+}
+
+const ReplyList = ({
+  replyIds
+}: {
+  replyIds: CommentId[]
+}) => {
+  const {comments} = useContext(StateContext)
+
+  return (
+    <div className="replies-list">
+      {replyIds.map(replyId => (
+        <CommentContent
+          comment={comments.byId[replyId]}
+          key={replyId}
+        />
+      ))}
+    </div>
+  )
+}
+
+// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
+const Comment = ({
+  comment
+}: {
+  comment: Comment
+}) => {
+  return (
+    <div className="thread">
+      <CommentContent comment={comment} />
+      
+      {comment.replies && (
+        <ReplyList replyIds={comment.replies} />
       )}
     </div>
   )

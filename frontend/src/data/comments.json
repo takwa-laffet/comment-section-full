@@ -6,7 +6,11 @@
       "content": "Impressive! Though it seems the drag feature could be improved. But overall it looks incredible. You've nailed the design and the responsiveness at various breakpoints works really well.",
       "createdAt": "1 month ago",
       "score": 12,
+<<<<<<< HEAD
       "user": "amyrobson",
+=======
+      "userId": "75a1c371-dd2c-4ef2-b014-4b9e9845a528",
+>>>>>>> frontend
       "replies": [],
       "replyingTo": null
     },
@@ -16,7 +20,11 @@
       "content": "Woah, your project looks awesome! How long have you been coding for? I'm still new, but think I want to dive into React as well soon. Perhaps you can give me an insight on where I can learn React? Thanks!",
       "createdAt": "2 weeks ago",
       "score": 5,
+<<<<<<< HEAD
       "user": "maxblagun",
+=======
+      "userId": "33f0f44b-6bfe-4059-9a78-346fdc8b4916",
+>>>>>>> frontend
       "replies": ["ebb06eea-9569-4eb0-9f2d-cacbaacc601e", "aa31419-e250-4bd6-8a72-53adaccdb005"],
       "replyingTo": null
     },
@@ -27,7 +35,11 @@
       "createdAt": "1 week ago",
       "score": 4,
       "replyingTo": "maxblagun",
+<<<<<<< HEAD
       "user": "ramsesmiron",
+=======
+      "userId": "69646504-d90d-4044-bdb2-4d316b32b51e",
+>>>>>>> frontend
       "replies": null
     },
     "aa31419-e250-4bd6-8a72-53adaccdb005": {
@@ -37,7 +49,11 @@
       "createdAt": "2 days ago",
       "score": 2,
       "replyingTo": "ramsesmiron",
+<<<<<<< HEAD
       "user": "juliusomo",
+=======
+      "userId": "a01f4dc1-6c49-4007-967d-66da8a478904",
+>>>>>>> frontend
       "replies": null
     }
   },
