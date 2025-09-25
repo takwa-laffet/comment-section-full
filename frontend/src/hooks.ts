@@ -1,6 +1,6 @@
 import { reducer } from "./reducer"
 import data from './data/comments.json'
-import { users } from "./components/UserActions"
+import { selectUserById, users } from "./components/UserActions"
 import { v4 as uuidv4 } from 'uuid'
 import { Comment, CommentId } from "./context"
 import { useImmerReducer } from "use-immer"
@@ -41,7 +41,7 @@ export function useComments() {
                 }
             }),
         replyCreated: (id, userId, content) => {
-            const user = users.byId[userId]
+            const user = selectUserById(userId)
 
             dispatch({
                 type: 'CREATE_REPLY',

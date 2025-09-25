@@ -15,10 +15,8 @@ export const users = data as unknown as {
   allId: string[]
 }
 
-export const selectUserById = (userId: User['id']) => {
-  const user = users.byId[userId]
-  return !user ? users.currentUser : user
-}
+export const selectUserById = (userId: User['id']) =>
+  users.byId[userId] || users.currentUser
 
 export const UserProfile = ({
   userId
