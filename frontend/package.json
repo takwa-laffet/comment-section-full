@@ -1,34 +1,18 @@
 {
-<<<<<<< HEAD
-  "name": "react-app",
-=======
   "name": "interactive-comment-section",
   "homepage": "https://hamdi4-beep.github.io/interactive-comment-section",
->>>>>>> frontend
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-<<<<<<< HEAD
-=======
-    "predeploy": "pnpm run build",
-    "deploy": "gh-pages -d dist",
->>>>>>> frontend
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-=======
-    "immer": "^10.1.3",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "use-immer": "^0.11.0",
->>>>>>> frontend
     "uuid": "^13.0.0",
     "zustand": "^5.0.8"
   },
@@ -40,10 +24,6 @@
     "eslint": "^9.35.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
-<<<<<<< HEAD
-=======
-    "gh-pages": "^6.3.0",
->>>>>>> frontend
     "globals": "^16.4.0",
     "typescript": "^5.9.2",
     "vite": "^7.1.6"
