@@ -1,5 +1,6 @@
 import { reducer } from "./reducer"
 import data from './data/comments.json'
+import { selectUserById, users } from "./components/UserActions"
 import { v4 as uuidv4 } from 'uuid'
 import { Comment, CommentId } from "./context"
 import { useImmerReducer } from "use-immer"
@@ -7,13 +8,9 @@ import { useImmerReducer } from "use-immer"
 /*
     Just keeping this here for reference. I'm going to define some "abstract" methods that update state so I don't have to track dispatch calls throughout the codebase. The easier it gets to modify the way dispatch calls work, the less time I can spend on making several changes within components that shouldn't care how state gets updated.
 */
-export type State = {
-    byId: Record<CommentId, Comment>
-    allId: CommentId[]
-}
 
 export type CreateComment = (content: Comment['content']) => void
-export type CreateReply = (commentId: CommentId, username: Comment['user'], content: Comment['content']) => void
+export type CreateReply = (commentId: CommentId, userId: Comment['userId'], content: Comment['content']) => void
 export type EditComment = (commentId: CommentId, content: string) => void
 export type DeleteComment = (commentId: CommentId) => void
 export type UpdateScore = (commentId: CommentId, currentScore: number) => void
@@ -39,16 +36,19 @@ export function useComments() {
                     newId: uuidv4()
                 }
             }),
-        replyCreated: (id, username, content) =>
+        replyCreated: (id, userId, content) => {
+            const user = selectUserById(userId)
+
             dispatch({
                 type: 'CREATE_REPLY',
                 payload: {
                     id,
                     newId: uuidv4(),
-                    username,
+                    username: user.username,
                     content
                 }
-            }),
+            })
+        },
         commentEdited: (id, content) =>
             dispatch({
                 type: 'EDIT_COMMENT',

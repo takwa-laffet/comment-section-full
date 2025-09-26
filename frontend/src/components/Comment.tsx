@@ -1,9 +1,8 @@
 import { useContext, useState, useRef } from "react"
 import { CommentId, StateContext } from "../context"
-import UserActions, { User, UserProfile } from "./UserActions"
+import UserActions, { UserProfile } from "./UserActions"
 import FormComponent from "./FormComponent"
 import { type Comment } from "../context"
-import {users} from './UserActions'
 
 const ScoreComponent = ({
   score,
@@ -68,22 +67,19 @@ const DeleteModal = ({
   )
 }
 
-const Comment = ({
+const CommentContent = ({
   comment
 }: {
   comment: Comment
 }) => {
   const {actions} = useContext(StateContext)
-  const [isReplying, setIsReplying] = useState(false)
-  const [isEditing, setIsEditing] = useState(false)
+  const [formStatus, setFormStatus] = useState<'replying' | 'editing' | null>(null)
   const [isModalHidden, setIsModalHidden] = useState(true)
 
   if (!comment) return
 
-  const user = comment.userId === users.currentUser.id ? users.currentUser : users.byId[comment.userId]
-
   const handleAddReplyDispatch = (content: string) =>
-    actions.replyCreated(comment.id, user.username, content)
+    actions.replyCreated(comment.id, comment.userId, content)
 
   const handleEditCommentDispatch = (content: string) =>
     actions.commentEdited(comment.id, content)
@@ -102,9 +98,8 @@ const Comment = ({
             <span className="comment-date">{comment.createdAt}</span>
 
             <UserActions
-              userId={user.id}
-              toggleReplyForm={() => setIsReplying(prev => !prev)}
-              toggleEditForm={() => setIsEditing(prev => !prev)}
+              userId={comment.userId}
+              updateFormStatus={(status: 'replying' | 'editing') => setFormStatus(prev => prev === status ? null : status)}
               showDeleteModal={() => setIsModalHidden(false)}
             />
           </div>
@@ -120,7 +115,7 @@ const Comment = ({
         </div>
       </div>
 
-      {isReplying && (
+      {formStatus === 'replying' && (
         <FormComponent
           placeholderValue='Add reply'
           value=""
@@ -128,7 +123,7 @@ const Comment = ({
         />
       )}
 
-      {isEditing && (
+      {formStatus === 'editing' && (
         <FormComponent
           placeholderValue=""
           value={comment.content}
@@ -146,28 +141,40 @@ const Comment = ({
   )
 }
 
-// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
-const Thread = ({
-  comment
+const ReplyList = ({
+  replyIds
 }: {
-  comment: Comment
+  replyIds: CommentId[]
 }) => {
   const {comments} = useContext(StateContext)
 
   return (
-    <div className="thread">
-      <Comment comment={comment} />
-      
-      <div className="replies-list">
-        {comment.replies?.map(replyId => (
-          <Comment
-            comment={comments.byId[replyId]}
-            key={replyId}
-          />
-        ))}
-      </div>
+    <div className="replies-list">
+      {replyIds.map(replyId => (
+        <CommentContent
+          comment={comments.byId[replyId]}
+          key={replyId}
+        />
+      ))}
     </div>
   )
 }
 
-export default Thread
+// This component extracts presentational logic which keeps both comments and replies visually consistent without needing to know about their differences.
+const Comment = ({
+  comment
+}: {
+  comment: Comment
+}) => {
+  return (
+    <div className="thread">
+      <CommentContent comment={comment} />
+      
+      {comment.replies && (
+        <ReplyList replyIds={comment.replies} />
+      )}
+    </div>
+  )
+}
+
+export default Comment

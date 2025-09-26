@@ -16,7 +16,7 @@ export const users = data as unknown as {
 }
 
 export const selectUserById = (userId: User['id']) =>
-  users.currentUser['id'] === userId ? users.currentUser : users.byId[userId]
+  users.byId[userId] || users.currentUser
 
 export const UserProfile = ({
   userId
@@ -24,7 +24,7 @@ export const UserProfile = ({
   userId: string
 }) => {
   const user = selectUserById(userId)
-  const isCurrentUser = user.id === users.currentUser['id']
+  const isCurrentUser = users.currentUser['id'] === userId
 
   return (
     <div className="user-profile">
@@ -39,24 +39,22 @@ export const UserProfile = ({
 
 function UserActions({
   userId,
-  toggleReplyForm,
-  toggleEditForm,
+  updateFormStatus,
   showDeleteModal
 }: {
   userId: string
-  toggleReplyForm: () => void
-  toggleEditForm: () => void
+  updateFormStatus: (status: 'replying' | 'editing') => void
   showDeleteModal: () => void
 }) {
   const user = selectUserById(userId)
   // mimicks user authentication for now
-  const isCurrentUser = users.currentUser.id === user.id
+  const isCurrentUser = users.currentUser.id === user?.id
 
   const handleReplyClick = () =>
-    toggleReplyForm()
+    updateFormStatus('replying')
 
   const handleEditClick = () =>
-    toggleEditForm()
+    updateFormStatus('editing')
 
   const handleDeleteClick = () =>
     showDeleteModal()

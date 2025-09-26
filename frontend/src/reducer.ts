@@ -1,6 +1,5 @@
 import users from './data/users.json'
 import { Comment, CommentId } from './context'
-import { State } from './hooks'
 import { Draft } from 'immer'
 
 interface CreateCommentPayload extends Pick<Comment, 'content'> {
@@ -13,12 +12,33 @@ interface CreateReplyPayload extends CreateCommentPayload {
 }
 
 interface EditCommentPayload extends Pick<Comment, 'content'> {}
-interface DeleteCommentPayload extends Pick<Comment, 'id'> {}
 
 interface UpdateScorePayload {
     id: CommentId
     currentScore: number
 }
+
+type State = {
+    byId: Record<CommentId, Comment>
+    allId: CommentId[]
+}
+
+const createComment = (props: {
+    parentId: string | null
+    id: string
+    content: string
+    replyingTo: string | null
+    replies: string[] | null
+}) => ({
+    id: props.id,
+    content: props.content,
+    parentId: props.parentId,
+    replyingTo: props.replyingTo,
+    replies: props.replies,
+    score: 0,
+    createdAt: 'just now',
+    userId: users.currentUser['id']
+})
 
 export function reducer(draft: Draft<State>, action: {
     type: string
@@ -31,16 +51,13 @@ export function reducer(draft: Draft<State>, action: {
             const payload = action.payload as CreateCommentPayload
             const newId = payload.newId
 
-            draft.byId[newId] = {
-                content: payload.content,
-                score: 0,
-                replies: [],
-                id: newId,
+            draft.byId[newId] = createComment({
                 parentId: null,
-                replyingTo: null,
-                createdAt: 'just now',
-                user: users.currentUser.username
-            }
+                id: newId,
+                content: payload.content,
+                replies: [],
+                replyingTo: null
+            })
 
             draft.allId.push(newId)
 
@@ -52,16 +69,13 @@ export function reducer(draft: Draft<State>, action: {
             const targetId = comment?.parentId || payload.id
             const targetComment = draft.byId[targetId]
             
-            draft.byId[payload.newId] = {
-                content: payload.content,
-                score: 0,
-                replies: null,
+            draft.byId[payload.newId] = createComment({
+                parentId: targetComment.id,
                 id: payload.newId,
-                parentId: targetId,
+                content: payload.content,
                 replyingTo: payload.username,
-                createdAt: 'just now',
-                user: users.currentUser.username
-            }
+                replies: null
+            })
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
             targetComment.replies && targetComment.replies.push(payload.newId)
@@ -77,10 +91,8 @@ export function reducer(draft: Draft<State>, action: {
         }
 
         case 'DELETE_COMMENT': {
-            const payload = action.payload as DeleteCommentPayload
-            const {[payload.id]: comment, ...rest} = draft.byId
+            delete draft.byId[action.payload.id]
             draft.allId = draft.allId.filter(id => id !== comment.id)
-            draft.byId = rest
             break
         }
 
