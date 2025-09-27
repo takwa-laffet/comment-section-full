@@ -1,21 +1,30 @@
-import users from '../data/users.json'
-import { useContext } from 'react'
-import { StateContext } from '../context'
+import data from '../data/users.json'
 
-type User = {
+export type User = {
   image: {
     png: string
     webp: string
   }
   username: string
+  id: string
 }
 
+export const users = data as unknown as {
+  currentUser: User
+  byId: Record<string, User>
+  allId: string[]
+}
+
+export const selectUserById = (userId: User['id']) =>
+  users.byId[userId] || users.currentUser
+
 export const UserProfile = ({
-  username
+  userId
 }: {
-  username: string
+  userId: string
 }) => {
-  const user = (users.byUsername as Record<string, User>)[username] || users.currentUser
+  const user = selectUserById(userId)
+  const isCurrentUser = users.currentUser['id'] === userId
 
   return (
     <div className="user-profile">
@@ -23,25 +32,25 @@ export const UserProfile = ({
         <img src={user.image.png} alt="" />
       </div>
 
-      <h3>{user.username}</h3>
+      <h3 className={isCurrentUser ? 'current-user' : ''}>{user.username}</h3>
     </div>
   )
 }
 
 function UserActions({
-  username,
+  userId,
   toggleReplyForm,
   toggleEditForm,
   showDeleteModal
 }: {
-  username: string
+  userId: string
   toggleReplyForm: () => void
   toggleEditForm: () => void
   showDeleteModal: () => void
 }) {
-  const {actions} = useContext(StateContext)
+  const user = selectUserById(userId)
   // mimicks user authentication for now
-  const isCurrentUser = users.currentUser.username === username
+  const isCurrentUser = users.currentUser.id === user?.id
 
   const handleReplyClick = () =>
     toggleReplyForm()

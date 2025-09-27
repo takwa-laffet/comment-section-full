@@ -4,30 +4,34 @@
             "png": "./images/avatars/image-juliusomo.png",
             "webp": "./images/avatars/image-juliusomo.webp"
         },
-        "username": "juliusomo"
+        "username": "juliusomo",
+        "id": "a01f4dc1-6c49-4007-967d-66da8a478904"
     },
-    "byUsername": {
-        "amyrobson": {
+    "byId": {
+        "75a1c371-dd2c-4ef2-b014-4b9e9845a528": {
             "image": { 
                 "png": "./images/avatars/image-amyrobson.png",
                 "webp": "./images/avatars/image-amyrobson.webp"
             },
-            "username": "amyrobson"
+            "username": "amyrobson",
+            "id": "75a1c371-dd2c-4ef2-b014-4b9e9845a528"
         },
-        "maxblagun": {
+        "33f0f44b-6bfe-4059-9a78-346fdc8b4916": {
             "image": { 
                 "png": "./images/avatars/image-maxblagun.png",
                 "webp": "./images/avatars/image-maxblagun.webp"
             },
-            "username": "maxblagun"
+            "username": "maxblagun",
+            "id": "33f0f44b-6bfe-4059-9a78-346fdc8b4916"
         },
-        "ramsesmiron": {
+        "69646504-d90d-4044-bdb2-4d316b32b51e": {
             "image": { 
                 "png": "./images/avatars/image-ramsesmiron.png",
                 "webp": "./images/avatars/image-ramsesmiron.webp"
             },
-            "username": "ramsesmiron"
+            "username": "ramsesmiron",
+            "id": "69646504-d90d-4044-bdb2-4d316b32b51e"
         }
     },
-    "allUsername": ["amyrobson", "maxblagun", "ramsesmiron"]
+    "allIds": ["a01f4dc1-6c49-4007-967d-66da8a478904", "75a1c371-dd2c-4ef2-b014-4b9e9845a528", "33f0f44b-6bfe-4059-9a78-346fdc8b4916", "69646504-d90d-4044-bdb2-4d316b32b51e"]
 }
