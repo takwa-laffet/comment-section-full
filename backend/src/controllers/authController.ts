@@ -17,7 +17,7 @@ export const signup = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "User registered", userId: (result as any).insertId });
   }catch (err) {
-    console.error(err); // <-- log the actual error
+    console.error(err); 
     res.status(500).json({ error: "Server error", details: err });
 }
 

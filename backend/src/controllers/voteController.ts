@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { db } from "../db"
 import { AuthRequest } from "../middleware/authMiddleware";
 
-// Ajouter ou changer un vote
 export const addOrUpdateVote = async (req: AuthRequest, res: Response) => {
   try {
     const { comment_id, vote_type } = req.body;
