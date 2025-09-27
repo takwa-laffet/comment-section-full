@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
 export const signup = async (req: Request, res: Response) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  
   try {
     const { username, email, password, avatar } = req.body;
 

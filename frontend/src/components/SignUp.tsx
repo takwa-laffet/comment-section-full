@@ -1,7 +1,30 @@
+import { FormEventHandler } from "react"
+
 function SignUp() {
+    const handleSubmit: FormEventHandler = e => {
+        e.preventDefault()
+        const formElem = e.currentTarget as HTMLFormElement
+        const formData = new FormData(formElem)
+
+        try {
+            fetch('http://localhost:3000/auth/signup', {
+                mode: 'cors',
+                method: 'POST',
+                body: JSON.stringify({
+                    username: formData.get('username'),
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    avatar: ""
+                })
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     return (
         <div className="sign-up">
-            <form action="#">
+            <form action="#" onSubmit={handleSubmit}>
                 <fieldset>
                     <label htmlFor="username">Username:</label>
                     <input type="text" name="username" id="username" />
