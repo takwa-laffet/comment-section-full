@@ -29,13 +29,13 @@
 
 /* Sign In */
 
-.sign-in {
+.sign-in, .sign-up {
     background-color: var(--neutral-white);
     padding: 1.5em;
     border-radius: 5px;
 }
 
-.sign-in input {
+.sign-in input, .sign-up input {
     display: block;
     margin-block: .5em;
     padding: .8em 2em;
@@ -44,19 +44,24 @@
     outline: none;
 }
 
-.sign-in button {
+.sign-in button, .sign-up button {
     background-color: var(--primary-purple-600);
     color: var(--neutral-white);
-    margin-top: .5em;
+    margin-top: 1em;
     padding: .5em 1em;
     border-radius: 5px;
     width: 100%;
     justify-content: center;
 }
 
-.sign-in fieldset {
+.sign-in fieldset, .sign-up fieldset {
     outline: none;
     border: none;
+    margin-top: 1em;
+}
+
+.sign-in fieldset:first-of-type, .sign-up fieldset:first-of-type {
+    margin-top: 0;
 }
 
 /* Delete Modal */
