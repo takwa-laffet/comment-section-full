@@ -39,11 +39,13 @@ export const UserProfile = ({
 
 function UserActions({
   userId,
-  updateFormStatus,
+  toggleReplyForm,
+  toggleEditForm,
   showDeleteModal
 }: {
   userId: string
-  updateFormStatus: (status: 'replying' | 'editing') => void
+  toggleReplyForm: () => void
+  toggleEditForm: () => void
   showDeleteModal: () => void
 }) {
   const user = selectUserById(userId)
