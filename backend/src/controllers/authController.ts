@@ -6,10 +6,9 @@ import jwt from "jsonwebtoken";
 const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
 export const signup = async (req: Request, res: Response) => {
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  
   try {
     const { username, email, password, avatar } = req.body;
+    console.log(req.body)
 
     const existingUser = await UserModel.getUserByEmail(email);
     if (existingUser) return res.status(400).json({ message: "Email already in use" });

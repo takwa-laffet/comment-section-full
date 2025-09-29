@@ -10,6 +10,9 @@ function SignUp() {
             fetch('http://localhost:3000/auth/signup', {
                 mode: 'cors',
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     username: formData.get('username'),
                     email: formData.get('email'),
@@ -17,6 +20,7 @@ function SignUp() {
                     avatar: ""
                 })
             })
+            .then(console.log)
         } catch (err) {
             console.log(err)
         }

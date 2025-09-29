@@ -54,7 +54,7 @@ export function reducer(draft: Draft<State>, action: {
                 content: payload.content,
                 replyingTo: payload.username,
                 replies: null
-            })
+            }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
             targetComment.replies && targetComment.replies.push(payload.newId)
