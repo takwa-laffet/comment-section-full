@@ -1,12 +1,13 @@
 import CommentSection from './components/CommentSection'
 import SignUp from './components/SignUp'
+import SignIn from './components/SignIn'
 import StateProvider from './context'
 
 function App() {
   return (
     <div className="App">
       <StateProvider>
-        <SignUp />
+        <SignIn />
       </StateProvider>
     </div>
   )
