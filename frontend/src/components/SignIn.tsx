@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 function SignIn() {
   const [loggedStatus, setLoggedStatus] = useState({
@@ -42,12 +42,12 @@ function SignIn() {
       <form action="#" onSubmit={handleSubmit}>
         <fieldset>
           <label htmlFor="email">Email:</label>
-          <input type="text" name='email' id='email' />
+          <input type="text" name='email' id='email' required />
         </fieldset>
         
         <fieldset>
           <label htmlFor="password">Password:</label>
-          <input type="password" name='password' id='password' />
+          <input type="password" name='password' id='password' required />
         </fieldset>
 
         <button>Sign In</button>
