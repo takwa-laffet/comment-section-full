@@ -1,10 +1,7 @@
-import { useEffect, useState } from "react"
+import { Navigate, useNavigate } from "react-router-dom"
 
 function SignIn() {
-  const [authenticationStatus, setAuthenticationStatus] = useState({
-    loggedIn: false,
-    message: ''
-  })
+  const navigate = useNavigate()
 
   const handleSubmit: React.FormEventHandler = e => {
     e.preventDefault()
@@ -25,17 +22,16 @@ function SignIn() {
       })
       .then(async res => {
         const data = await res.json()
-        setAuthenticationStatus({ loggedIn: true, message: data.message})
+        localStorage.setItem('token', data.token)
+        navigate('/')
       })
     } catch (e) {
       console.error(e)
     }
   }
 
-  if (authenticationStatus.loggedIn)
-    return (
-      <p>{authenticationStatus.message}</p>
-    )
+  if (localStorage.getItem('token'))
+    return <Navigate to='/' replace />
 
   return (
     <div className="sign-in">

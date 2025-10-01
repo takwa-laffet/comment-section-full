@@ -34,7 +34,7 @@ export const login = async (req: Request, res: Response) => {
     if (!valid) return res.status(400).json({ message: "Invalid email or password" });
 
     const token = jwt.sign({ userId: user.user_id }, JWT_SECRET, { expiresIn: "1h" });
-    res.cookie("token", token, { httpOnly: true }).json({ message: "Logged in successfully" });
+    res.cookie("token", token, { httpOnly: true }).json({ message: "Logged in successfully", token });
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }
