@@ -1,6 +1,8 @@
+import { useState } from "react"
 import { Navigate, useNavigate } from "react-router-dom"
 
 function SignIn() {
+  const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
 
   const handleSubmit: React.FormEventHandler = e => {
@@ -22,10 +24,13 @@ function SignIn() {
             })
           })
 
+        const data = await res.json()
+
         if (res.ok) {
-          const data = await res.json()
           localStorage.setItem('token', data.token)
           navigate('/')
+        } else {
+          setErrorMessage(data.message)
         }
       } catch (e) {
         console.error(e)
@@ -39,20 +44,24 @@ function SignIn() {
     return <Navigate to='/' replace />
 
   return (
-    <div className="sign-in">
-      <form action="#" onSubmit={handleSubmit}>
-        <fieldset>
-          <label htmlFor="email">Email:</label>
-          <input type="text" name='email' id='email' required />
-        </fieldset>
-        
-        <fieldset>
-          <label htmlFor="password">Password:</label>
-          <input type="password" name='password' id='password' required />
-        </fieldset>
+    <div className="container">
+      {errorMessage && (<p>{errorMessage}</p>)}
 
-        <button>Sign In</button>
-      </form>
+      <div className="sign-in">
+        <form action="#" onSubmit={handleSubmit}>
+          <fieldset>
+            <label htmlFor="email">Email:</label>
+            <input type="text" name='email' id='email' required />
+          </fieldset>
+          
+          <fieldset>
+            <label htmlFor="password">Password:</label>
+            <input type="password" name='password' id='password' required />
+          </fieldset>
+
+          <button>Sign In</button>
+        </form>
+      </div>
     </div>
   )
 }
