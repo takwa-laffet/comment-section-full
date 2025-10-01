@@ -129,6 +129,12 @@ button {
 .App {
     width: 100%;
     max-width: 768px;
+    padding: 1em;
+}
+
+.logout-btn {
+    display: block;
+    margin-left: auto;
 }
 
 /* Comment Component */

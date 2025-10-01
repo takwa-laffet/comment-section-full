@@ -34,7 +34,7 @@ function CommentSection() {
 
     return (
         <div className="comment-section">
-            <button onClick={handleLogoutClick}>Log out</button>
+            <button className='logout-btn' onClick={handleLogoutClick}>Log out</button>
             <CommentList />
 
             <FormComponent
