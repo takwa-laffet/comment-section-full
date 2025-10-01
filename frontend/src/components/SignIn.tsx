@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 function SignIn() {
-  const [loggedStatus, setLoggedStatus] = useState({
+  const [authenticationStatus, setAuthenticationStatus] = useState({
     loggedIn: false,
     message: ''
   })
@@ -25,16 +25,16 @@ function SignIn() {
       })
       .then(async res => {
         const data = await res.json()
-        setLoggedStatus({ loggedIn: true, message: data.message})
+        setAuthenticationStatus({ loggedIn: true, message: data.message})
       })
     } catch (e) {
       console.error(e)
     }
   }
 
-  if (loggedStatus.loggedIn)
+  if (authenticationStatus.loggedIn)
     return (
-      <p>{loggedStatus.message}</p>
+      <p>{authenticationStatus.message}</p>
     )
 
   return (
