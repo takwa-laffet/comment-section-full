@@ -6,15 +6,15 @@ import {Routes, Route} from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
-      <StateProvider>
+    <StateProvider>
+      <div className="App">
         <Routes>
           <Route path='/' element={<CommentSection />} />
           <Route path='/auth/login' element={<SignIn />} />
           <Route path='/auth/signup' element={<SignUp />} />
         </Routes>
-      </StateProvider>
-    </div>
+      </div>
+    </StateProvider>
   )
 }
 
