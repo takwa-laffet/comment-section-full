@@ -1,5 +1,5 @@
-import users from './data/users.json'
-import { Comment, CommentId } from './context'
+import { users } from './components/UserActions'
+import type { Comment, CommentId } from './context'
 import { State } from './hooks'
 import { Draft } from 'immer'
 
@@ -19,6 +19,9 @@ interface UpdateScorePayload {
     currentScore: number
 }
 
+const selectUser = (userId: string) =>
+    users.byId[userId]
+
 export function reducer(draft: Draft<State>, action: {
     type: string
     payload: any
@@ -37,7 +40,8 @@ export function reducer(draft: Draft<State>, action: {
                 parentId: null,
                 replyingTo: null,
                 createdAt: 'just now',
-                user: users.currentUser.username
+                score: 0,
+                userId: users.currentUser.id
             }
 
             draft.allId.push(newId)
@@ -52,8 +56,13 @@ export function reducer(draft: Draft<State>, action: {
             
             draft.byId[payload.newId] = {
                 content: payload.content,
-                replyingTo: payload.username,
-                replies: null
+                replies: null,
+                id: payload.newId,
+                parentId: targetId,
+                replyingTo: users.byId[targetComment.userId].username,
+                createdAt: 'just now',
+                score: 0,
+                userId: users.currentUser.id
             }
 
             // prevents adding a reply to reply and instead looks up the parentComment and adds it to parentComment's replies array of references.
@@ -70,8 +79,7 @@ export function reducer(draft: Draft<State>, action: {
         }
 
         case 'DELETE_COMMENT': {
-            const payload = action.payload as DeleteCommentPayload
-            const {[payload.id]: comment, ...rest} = draft.byId
+            delete draft.byId[action.payload.id]
             draft.allId = draft.allId.filter(id => id !== comment.id)
             break
         }
