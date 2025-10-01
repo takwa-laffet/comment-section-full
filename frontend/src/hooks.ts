@@ -4,6 +4,7 @@ import { selectUserById, users } from "./components/UserActions"
 import { v4 as uuidv4 } from 'uuid'
 import { Comment, CommentId } from "./context"
 import { useImmerReducer } from "use-immer"
+import { useState } from "react"
 
 /*
     Just keeping this here for reference. I'm going to define some "abstract" methods that update state so I don't have to track dispatch calls throughout the codebase. The easier it gets to modify the way dispatch calls work, the less time I can spend on making several changes within components that shouldn't care how state gets updated.
@@ -90,4 +91,20 @@ export function useComments() {
         comments,
         actions
     }
+}
+
+export const useLocalStorage = (key: string) => {
+    const [token, setToken] = useState('')
+
+    const getToken = () =>
+        localStorage.getItem(key) || null
+
+    const storeToken = (token: string) => {
+        if (!getToken())
+            localStorage.setItem(key, token)
+
+        setToken(token)
+    }
+
+    return {token, storeToken}
 }

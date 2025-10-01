@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Navigate, useNavigate } from "react-router-dom"
+import { useLocalStorage } from "../hooks"
 
 const logUserIn = async (email: string, password: string) => {
   try {
@@ -24,6 +25,7 @@ const logUserIn = async (email: string, password: string) => {
 
 function SignIn() {
   const [errorMessage, setErrorMessage] = useState('')
+  const {token, storeToken} = useLocalStorage('token')
   const navigate = useNavigate()
 
   const handleSubmit: React.FormEventHandler = async e => {
@@ -35,14 +37,14 @@ function SignIn() {
     const token = await logUserIn(formData.get('email') as string, formData.get('password') as string)
 
     if (token) {
-      localStorage.setItem('token', token)
+      storeToken(token)
       navigate('/')
     } else {
       setErrorMessage('Invalid email or password')
     }
   }
 
-  if (localStorage.getItem('token'))
+  if (token)
     return <Navigate to='/' replace />
 
   return (
