@@ -15,6 +15,7 @@ const logUserIn = async (email: string, password: string) => {
       })
 
     const data = await res.json()
+    
     return data.token
   } catch (e) {
     console.error(e)

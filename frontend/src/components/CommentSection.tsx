@@ -4,27 +4,27 @@ import FormComponent from "./FormComponent";
 import { StateContext } from "../context";
 import { useNavigate } from "react-router-dom";
 
+const logUserOut = async () => {
+    try {
+        return await fetch('http://localhost:3000/auth/logout', {
+            method: 'POST'
+        })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 function CommentSection() {
     const {actions} = useContext(StateContext)
     const navigate = useNavigate()
 
-    const handleLogoutClick = () => {
-        const logOut = async () => {
-            try {
-                const res = await fetch('http://localhost:3000/auth/logout', {
-                    method: 'POST'
-                })
-
-                if (res.ok) {
-                    localStorage.removeItem('token')
-                    navigate('/auth/login')
-                }
-            } catch (err) {
-                console.error(err)
-            }
+    const handleLogoutClick = async () => {
+        const res = await logUserOut()
+        
+        if (res?.ok) {
+            localStorage.removeItem('token')
+            navigate('/auth/login')
         }
-
-        logOut()
     }
 
     useEffect(() => {
