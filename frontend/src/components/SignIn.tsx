@@ -1,4 +1,11 @@
+import { useState } from "react"
+
 function SignIn() {
+  const [loggedStatus, setLoggedStatus] = useState({
+    loggedIn: false,
+    message: ''
+  })
+
   const handleSubmit: React.FormEventHandler = e => {
     e.preventDefault()
 
@@ -16,11 +23,19 @@ function SignIn() {
           password: formData.get('password')
         })
       })
-      .then(async res => console.log(await res.json()))
+      .then(async res => {
+        const data = await res.json()
+        setLoggedStatus({ loggedIn: true, message: data.message})
+      })
     } catch (e) {
       console.error(e)
     }
   }
+
+  if (loggedStatus.loggedIn)
+    return (
+      <p>{loggedStatus.message}</p>
+    )
 
   return (
     <div className="sign-in">
