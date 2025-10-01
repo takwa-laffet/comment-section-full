@@ -1,43 +1,44 @@
 import { useState } from "react"
 import { Navigate, useNavigate } from "react-router-dom"
 
+const logUserIn = async (email: string, password: string) => {
+  try {
+    const res = await fetch('http://localhost:3000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          password
+        })
+      })
+
+    const data = await res.json()
+    return data.token
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 function SignIn() {
   const [errorMessage, setErrorMessage] = useState('')
   const navigate = useNavigate()
 
-  const handleSubmit: React.FormEventHandler = e => {
+  const handleSubmit: React.FormEventHandler = async e => {
     e.preventDefault()
 
     const formElem = e.currentTarget as HTMLFormElement
     const formData = new FormData(formElem)
 
-    const loginRequest = async () => {
-      try {
-        const res = await fetch('http://localhost:3000/auth/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              email: formData.get('email'),
-              password: formData.get('password')
-            })
-          })
+    const token = await logUserIn(formData.get('email') as string, formData.get('password') as string)
 
-        const data = await res.json()
-
-        if (res.ok) {
-          localStorage.setItem('token', data.token)
-          navigate('/')
-        } else {
-          setErrorMessage(data.message)
-        }
-      } catch (e) {
-        console.error(e)
-      }
+    if (token) {
+      localStorage.setItem('token', token)
+      navigate('/')
+    } else {
+      setErrorMessage('Invalid email or password')
     }
-
-    loginRequest()
   }
 
   if (localStorage.getItem('token'))
