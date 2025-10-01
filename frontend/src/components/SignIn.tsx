@@ -9,25 +9,30 @@ function SignIn() {
     const formElem = e.currentTarget as HTMLFormElement
     const formData = new FormData(formElem)
 
-    try {
-      fetch('http://localhost:3000/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: formData.get('email'),
-          password: formData.get('password')
-        })
-      })
-      .then(async res => {
-        const data = await res.json()
-        localStorage.setItem('token', data.token)
-        navigate('/')
-      })
-    } catch (e) {
-      console.error(e)
+    const loginRequest = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/auth/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              email: formData.get('email'),
+              password: formData.get('password')
+            })
+          })
+
+        if (res.ok) {
+          const data = await res.json()
+          localStorage.setItem('token', data.token)
+          navigate('/')
+        }
+      } catch (e) {
+        console.error(e)
+      }
     }
+
+    loginRequest()
   }
 
   if (localStorage.getItem('token'))
