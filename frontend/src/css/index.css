@@ -180,12 +180,12 @@ h3.current-user {
     margin-left: 1em;
 }
 
-.user-img {
+.user-avatar {
     width: 3em;
     height: 3em;
 }
 
-.user-img img {
+.user-avatar img {
     display: block;
     object-fit: cover;
     max-width: 100%;
