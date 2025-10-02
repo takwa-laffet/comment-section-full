@@ -16,7 +16,6 @@ const logUserIn = async (email: string, password: string) => {
       })
 
     const data = await res.json()
-    
     return data.token
   } catch (e) {
     console.error(e)
@@ -49,7 +48,9 @@ function SignIn() {
 
   return (
     <div className="container">
-      {errorMessage && (<p>{errorMessage}</p>)}
+      {errorMessage && (
+        <p>{errorMessage}</p>
+      )}
 
       <div className="sign-in">
         <form action="#" onSubmit={handleSubmit}>
