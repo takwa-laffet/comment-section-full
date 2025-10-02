@@ -15,8 +15,7 @@ const logUserIn = async (email: string, password: string) => {
         })
       })
 
-    const data = await res.json()
-    return data.token
+    return (await res.json()).token
   } catch (e) {
     console.error(e)
   }
@@ -24,7 +23,7 @@ const logUserIn = async (email: string, password: string) => {
 
 function SignIn() {
   const [errorMessage, setErrorMessage] = useState('')
-  const {token, storeToken} = useLocalStorage('token')
+  const {storeToken} = useLocalStorage('token')
   const navigate = useNavigate()
 
   const handleSubmit: React.FormEventHandler = async e => {
@@ -37,14 +36,11 @@ function SignIn() {
 
     if (token) {
       storeToken(token)
-      navigate('/')
+      navigate('/', { replace: true })
     } else {
       setErrorMessage('Invalid email or password')
     }
   }
-
-  if (token)
-    return <Navigate to='/' replace />
 
   return (
     <div className="container">
